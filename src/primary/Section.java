@@ -234,5 +234,9 @@ public class Section {
 		}
 		return true;
 	}
-	
+
+	public ArrayList<Section> getActiveSections(Connection conn){
+		ArrayList<Section> list = new ArrayList<Section>();
+		Statement
+	}
 }
