@@ -11,13 +11,13 @@ import java.sql.Statement;
  * author Ethan Brinser
  * 22 March 2019
  */
-public class DisplayGrid {
+public class DisplayGrid extends SqlBase{
 	private Section section;
 	private short[][] grades;
 	private long gridTemplateId;
 	
 	public DisplayGrid(Connection conn, Section section, int sectionGridNumber) throws SQLException {
-		super();
+		super(conn);
 		this.section=section;
 		this.gridTemplateId=section.getGrids().get(sectionGridNumber).getInternalId();
 		//get the grades in order
@@ -43,7 +43,7 @@ public class DisplayGrid {
 	}
 	
 	//the grades setter
-	public boolean setGrade(Connection conn, int rowIndex, int colIndex, short grade) {
+	public boolean setGrade(int rowIndex, int colIndex, short grade) {
 		try {
 			Statement sm = conn.createStatement();
 			sm.executeUpdate("UPDATE Grades SET g"+colIndex+"="+grade+"WHERE gridTemplate="+this.gridTemplateId+

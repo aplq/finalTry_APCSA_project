@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * author Ethan Brinser
  * 22 March 2019
  */
-public class Section {
+public class Section extends SqlBase{
 	private long internalId;
 	private String name;
 	private String teacher;
@@ -23,6 +23,7 @@ public class Section {
 	
 	//so the user can do custom sql statments
 	public Section(Connection conn, ResultSet rs) throws SQLException {
+		super(conn);
 		this.name=rs.getString("name");
 		this.teacher=rs.getString("teacher");
 		//temp arrays to hold internalIds
@@ -62,7 +63,7 @@ public class Section {
 		}
 	}
 	public Section(Connection conn, long internalId) throws SQLException {
-		super();
+		super(conn);
 		this.internalId=internalId;
 		//set up the sql query
 		Statement stmt = conn.createStatement();
@@ -133,26 +134,26 @@ public class Section {
 	}
 	
 	//setters
-	public void setName(Connection conn, String name) throws SQLException {
+	public void setName(String name) throws SQLException {
 		this.name = name;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Section SET name= '"+name+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
-	public void setActive(Connection conn, boolean isActive) throws SQLException {
+	public void setActive(boolean isActive) throws SQLException {
 		this.isActive = isActive;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Section SET isActive= "+isActive+" WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
 
-	public void setTeacher(Connection conn, String teacher) throws SQLException {
+	public void setTeacher(String teacher) throws SQLException {
 		this.teacher = teacher;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Section SET teacher= '"+teacher+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
-	public boolean removeStu(Connection conn, Student stu) {
+	public boolean removeStu(Student stu) {
 		Statement stmt=null;
 		int stuNumber=0;
 		for(;stuNumber<this.students.size();stuNumber++) {
@@ -182,7 +183,7 @@ public class Section {
 		}
 		return true;
 	}
-	public boolean addStu(Connection conn, Student stu) {
+	public boolean addStu(Student stu) {
 		Statement stmt=null;
 		try {
 			stmt = conn.createStatement();
@@ -193,7 +194,7 @@ public class Section {
 		}
 		return true;
 	}
-	public boolean removeGrid(Connection conn, GridTemplate grid) {
+	public boolean removeGrid(GridTemplate grid) {
 		Statement stmt=null;
 		int gridNumber=0;
 		for(;gridNumber<this.grids.size();gridNumber++) {
@@ -223,7 +224,7 @@ public class Section {
 		}
 		return true;
 	}
-	public boolean addGrid(Connection conn, GridTemplate grid) {
+	public boolean addGrid(GridTemplate grid) {
 		Statement stmt=null;
 		try {
 			stmt = conn.createStatement();
@@ -233,10 +234,5 @@ public class Section {
 			return false;
 		}
 		return true;
-	}
-
-	public ArrayList<Section> getActiveSections(Connection conn){
-		ArrayList<Section> list = new ArrayList<Section>();
-		Statement
 	}
 }

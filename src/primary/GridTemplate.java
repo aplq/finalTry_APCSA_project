@@ -10,14 +10,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class GridTemplate {
+public class GridTemplate extends SqlBase{
 	private long internalId;
 	private String name;
 	private ArrayList<Assignment> assignments;	//max 50
 	public static final int MAX_NUM_ASSIGNMENTS=50;
 	
 	public GridTemplate(Connection conn, long intenalId) throws SQLException {
-		super();
+		super(conn);
 		this.internalId=intenalId;
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Assignments WHERE internalId="+this.internalId+";");
@@ -60,7 +60,7 @@ public class GridTemplate {
 	}
 	
 	//setters
-	public boolean addAssignment(Connection conn, Assignment a) {
+	public boolean addAssignment(Assignment a) {
 		this.assignments.add(a);
 		Statement stmt;
 		try {
@@ -72,7 +72,7 @@ public class GridTemplate {
 		}
 		return true;
 	}
-	public boolean removeAssignment(Connection conn, Assignment a) {
+	public boolean removeAssignment(Assignment a) {
 		Statement stmt=null;
 		int assignmentNumber=0;
 		for(;assignmentNumber<this.assignments.size();assignmentNumber++) {
@@ -102,7 +102,7 @@ public class GridTemplate {
 		}
 		return true;
 	}
-	public boolean shuffleAssignments(Connection conn, ArrayList<Assignment> assignments) {
+	public boolean shuffleAssignments(ArrayList<Assignment> assignments) {
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();

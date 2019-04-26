@@ -6,14 +6,14 @@ package primary;
  */
 import java.sql.*;
 
-public class Assignment {
+public class Assignment extends SqlBase{
 	private long internalId;
 	private String description;
 	private short type;	//0=normal, 1=quiz, 2=test
     private int weight;
 	//load assignment from sql database
 	public Assignment(Connection conn, long internalId) throws SQLException {
-		super();
+		super(conn);
 		//set internal id
 		this.internalId=internalId;
 		//run the sql
@@ -28,7 +28,7 @@ public class Assignment {
 	}
 	//creating a new assignment
 	public Assignment(Connection conn, String description, short type, int weight) throws SQLException {
-		super();
+		super(conn);
 		//set the fields
 		this.description=description;
 		this.type=type;
@@ -60,14 +60,14 @@ public class Assignment {
 	
 	//all the setters
 	//they set the local value and the data base value
-	public void setDescription(Connection conn, String description) throws SQLException {
+	public void setDescription(String description) throws SQLException {
 		this.description = description;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Assignments SET description= '"+description+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
 
-	public void setType(Connection conn, short type) throws SQLException {
+	public void setType(short type) throws SQLException {
 		this.type=type;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Assignments SET type= "+type+" WHERE internalId="+this.internalId+";");
@@ -83,6 +83,9 @@ public class Assignment {
     }
 	
 	//delete function
+	public void delete() throws SQLException{
+		Assignment.delete(conn,internalId);
+	}
 	public static void delete(Connection conn, long internalId) throws SQLException {
 		Statement stmt = conn.createStatement();
 		stmt.execute("DELETE FROM Assignments WHERE internalId="+internalId);

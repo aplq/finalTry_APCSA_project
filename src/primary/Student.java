@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Student {
+public class Student extends SqlBase{
 	private long internalId;
 	private String firstName;
 	private String lastName;
@@ -17,8 +17,9 @@ public class Student {
 	private short grade;
 	private long studentId;
 	public static final String[] genders = {"Male","Female","Other"};
-	public Student(Connection conn, long internalId) throws SQLException {
-		super();
+
+    public Student(Connection conn, long internalId) throws SQLException {
+		super(conn);
 		this.internalId=internalId;
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Assignments WHERE internalId="+this.internalId+";");
@@ -57,31 +58,31 @@ public class Student {
 	}
 	
 	//setters
-	public void setFirstName(Connection conn, String firstName) throws SQLException {
+	public void setFirstName(String firstName) throws SQLException {
 		this.firstName = firstName;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Students SET firstName= '"+firstName+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
-	public void setLastName(Connection conn, String lastName) throws SQLException {
+	public void setLastName(String lastName) throws SQLException {
 		this.lastName = lastName;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Students SET lastName= '"+lastName+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
-	public void setGender(Connection conn, short gender) throws SQLException {
+	public void setGender(short gender) throws SQLException {
 		this.gender = gender;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Students SET gender= '"+gender+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
-	public void setGrade(Connection conn, short grade) throws SQLException {
+	public void setGrade(short grade) throws SQLException {
 		this.grade = grade;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Students SET grade= '"+grade+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
-	public void setStudentId(Connection conn, long studentId) throws SQLException {
+	public void setStudentId(long studentId) throws SQLException {
 		this.studentId = studentId;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Students SET studentId= '"+studentId+"' WHERE internalId="+this.internalId+";");

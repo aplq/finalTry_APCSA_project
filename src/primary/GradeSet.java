@@ -3,12 +3,13 @@ package primary;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-public class GradeSet {
+public class GradeSet extends SqlBase{
 	private long gridId;
 	private long studentId;
 	private ArrayList<Integer> grades;
 	
 	public GradeSet(Connection conn, long gridId, long studentId) {
+		super(conn);
 		this.gridId=gridId;
 		this.studentId=studentId;
 		//INSERT SQL
@@ -26,7 +27,7 @@ public class GradeSet {
 	}
 	
 	//set individual grades
-	public void changeGrade(Connection conn, int position, int value) {
+	public void changeGrade(int position, int value) {
 		this.grades.set(position, value);
 		//INSERT SQL
 	}
