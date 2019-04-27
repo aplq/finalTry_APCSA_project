@@ -21,7 +21,7 @@ public class DisplayGrid extends SqlBase{
 		this.section=section;
 		this.gridTemplateId=section.getGrids().get(sectionGridNumber).getInternalId();
 		//get the grades in order
-		this.grades=new short[section.getStudents().size()][section.getGrids().size()];
+		this.grades=new short[section.getStudents().size()][section.getGrids().get(sectionGridNumber).numOfAssignments()];
 		for(int row=0; row<section.getStudents().size(); row++) {
 			Statement sm = conn.createStatement();
 			ResultSet rs = sm.executeQuery("SELECT * FROM Grades WHERE "+
@@ -30,7 +30,7 @@ public class DisplayGrid extends SqlBase{
 			//go through the results
 			rs.next();
 			for(int col=0; col<section.getGrids().size();col++) {
-				this.grades[row][col]=rs.getShort("g"+col);
+				this.grades[row][col]=rs.getShort("grade"+col);
 			}
 		}
 	}

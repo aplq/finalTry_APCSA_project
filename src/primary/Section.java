@@ -67,7 +67,7 @@ public class Section extends SqlBase{
 		this.internalId=internalId;
 		//set up the sql query
 		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Sections WHERE internalId="+this.internalId+";");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Section WHERE internalId="+this.internalId+";");
 		rs.next();
 		this.name=rs.getString("name");
 		this.teacher=rs.getString("teacher");
@@ -109,6 +109,18 @@ public class Section extends SqlBase{
 			this.grids.add(new GridTemplate(conn, gridTempIds[d]));
 		}
 	}
+	public Section(Connection conn, String name, String teacher) throws SQLException{
+		super(conn);
+		this.name=name;
+		this.teacher=teacher;
+		this.isActive=true;
+		this.students= new ArrayList<Student>();
+		this.grids= new ArrayList<GridTemplate>();
+		Statement stmt = conn.createStatement();
+		stmt.execute("INSERT INTO Section VALUES ("+name+","+teacher+",true );");
+		stmt.close();
+		//take care of internalID
+	}
 
 	//getters
 	public long getInternalId() {
@@ -146,7 +158,6 @@ public class Section extends SqlBase{
 		stmt.execute("UPDATE Section SET isActive= "+isActive+" WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
-
 	public void setTeacher(String teacher) throws SQLException {
 		this.teacher = teacher;
 		Statement stmt = conn.createStatement();
@@ -164,18 +175,18 @@ public class Section extends SqlBase{
 		try {
 			//remove the student
 			stmt = conn.createStatement();
-			stmt.addBatch("UPDATE Sections SET stu"+stuNumber+"= -1 WHERE internalId="+this.internalId+";");
+			stmt.addBatch("UPDATE Section SET student"+stuNumber+"= -1 WHERE internalId="+this.internalId+";");
 			this.grids.remove(stuNumber);
 			//shift students over
 			while(stuNumber<this.students.size()-1) {
 				stmt = conn.createStatement();
-				stmt.addBatch("UPDATE Sections SET stu"+stuNumber+"= "+this.students.get(stuNumber+1).getInternalId()+
+				stmt.addBatch("UPDATE Section SET student"+stuNumber+"= "+this.students.get(stuNumber+1).getInternalId()+
 						" WHERE internalId="+this.internalId+";");
 				stuNumber++;
 			}
 			//set the position after the grid to -1
 			stmt = conn.createStatement();
-			stmt.addBatch("UPDATE Sections SET stu"+this.students.size()+"= -1 WHERE internalId="+this.internalId+";");
+			stmt.addBatch("UPDATE Section SET student"+this.students.size()+"= -1 WHERE internalId="+this.internalId+";");
 			stmt.executeBatch();
 			stmt.close();
 		} catch (SQLException e) {
@@ -187,7 +198,7 @@ public class Section extends SqlBase{
 		Statement stmt=null;
 		try {
 			stmt = conn.createStatement();
-			stmt.execute("UPDATE Sections SET stu"+this.numStudents()+"= "+stu.getInternalId()+" WHERE internalId="+this.internalId+";");
+			stmt.execute("UPDATE Section SET student"+this.numStudents()+"= "+stu.getInternalId()+" WHERE internalId="+this.internalId+";");
 			stmt.close();
 		} catch (SQLException e) {
 			return false;
@@ -205,18 +216,18 @@ public class Section extends SqlBase{
 		try {
 			//remove the grid
 			stmt = conn.createStatement();
-			stmt.addBatch("UPDATE Sections SET grid"+gridNumber+"= -1 WHERE internalId="+this.internalId+";");
+			stmt.addBatch("UPDATE Section SET grid"+gridNumber+"= -1 WHERE internalId="+this.internalId+";");
 			this.grids.remove(gridNumber);
 			//shift grids over
 			while(gridNumber<this.grids.size()-1) {
 				stmt = conn.createStatement();
-				stmt.addBatch("UPDATE Sections SET grid"+gridNumber+"= "+this.grids.get(gridNumber+1).getInternalId()+
+				stmt.addBatch("UPDATE Section SET grid"+gridNumber+"= "+this.grids.get(gridNumber+1).getInternalId()+
 						" WHERE internalId="+this.internalId+";");
 				gridNumber++;
 			}
 			//set the position after the grid to -1
 			stmt = conn.createStatement();
-			stmt.addBatch("UPDATE Sections SET grid"+this.grids.size()+"= -1 WHERE internalId="+this.internalId+";");
+			stmt.addBatch("UPDATE Section SET grid"+this.grids.size()+"= -1 WHERE internalId="+this.internalId+";");
 			stmt.executeBatch();
 			stmt.close();
 		} catch (SQLException e) {
@@ -228,11 +239,18 @@ public class Section extends SqlBase{
 		Statement stmt=null;
 		try {
 			stmt = conn.createStatement();
-			stmt.execute("UPDATE Sections SET grid"+this.grids.size()+"= "+grid.getInternalId()+" WHERE internalId="+this.internalId+";");
+			stmt.execute("UPDATE Section SET grid"+this.grids.size()+"= "+grid.getInternalId()+" WHERE internalId="+this.internalId+";");
 			stmt.close();
 		} catch (SQLException e) {
 			return false;
 		}
 		return true;
+	}
+
+	//delete function
+	public void delete() throws SQLException {
+		Statement stmt = conn.createStatement();
+		stmt.execute("DELETE FROM Section WHERE internalID="+this.internalId+",");
+		stmt.close();
 	}
 }

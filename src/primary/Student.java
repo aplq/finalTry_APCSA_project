@@ -20,6 +20,7 @@ public class Student extends SqlBase{
 
     public Student(Connection conn, long internalId) throws SQLException {
 		super(conn);
+
 		this.internalId=internalId;
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Assignments WHERE internalId="+this.internalId+";");
