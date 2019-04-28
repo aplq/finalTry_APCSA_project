@@ -2,15 +2,14 @@ drop database projectGrids;
 create database projectGrids;
 use projectGrids;
 create table Assignments(
-                            internalID bigint not null,
+                            internalID bigint auto_increment not null primary key,
                             description mediumtext,
                             weight integer default 100 not null,
-                            type tinyint default 0 not null,
-                            index (internalID)
+                            assignmentType tinyint default 0 not null
 );
 
 create table GridTemplates(
-                              internalID bigint not null,
+                              internalID bigint auto_increment not null primary key,
                               name char(40) default '' not null,
                               assignment0 bigint default -1 not null,
                               assignment1 bigint default -1 not null,
@@ -57,18 +56,16 @@ create table GridTemplates(
                               assignment46 bigint default -1 not null,
                               assignment47 bigint default -1 not null,
                               assignment48 bigint default -1 not null,
-                              assignment49 bigint default -1 not null,
-                              index (internalID)
+                              assignment49 bigint default -1 not null
 );
 
 create table Student(
-                        internalID bigint not null,
+                        internalID bigint auto_increment not null primary key,
                         fisrtName char(20) default '' not null,
                         lastName char(20) default  '' not null,
                         gender tinyint default 2 not null,
                         grade tinyint default 0 not null,
-                        studentID bigint default -1 not null,
-                        index (internalID)
+                        studentID bigint default -1 not null
 );
 
 create table Grades(
@@ -128,7 +125,7 @@ create table Grades(
 );
 
 create table Section(
-                        internalID bigint not null,
+                        internalID bigint auto_increment not null primary key,
                         name char(40) default 'default name' not null,
                         teacher char(20) default 'default teacher' not null,
                         isActive boolean default true not null,
@@ -231,6 +228,5 @@ create table Section(
                         grid46 bigint default -1 not null,
                         grid47 bigint default -1 not null,
                         grid48 bigint default -1 not null,
-                        grid49 bigint default -1 not null,
-                        index (internalID)
+                        grid49 bigint default -1 not null
 );

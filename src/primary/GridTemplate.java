@@ -116,4 +116,7 @@ public class GridTemplate extends SqlBase{
 		}
 		return true;
 	}
+	public void delete() throws SQLException{
+		System.out.println("Deleate is not set up for GridTemplate");
+	}
 }

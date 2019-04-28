@@ -53,14 +53,14 @@ public class Main_Test {
 			test(a, b);
 
 			//change a value
-		   a.setDescription(conn, "testing update");
+		   a.setDescription("testing update");
 		   
 		   //reload Assignment b and test for equality
 		   b = new Assignment(conn, a.getInternalId());
 			test(a, b);
 
 			//delete the assignment
-		   Assignment.delete(conn, a.getInternalId());
+		   a.delete();
 		   
 		   Main_Test.numRowsInAssignments(conn);
 		   

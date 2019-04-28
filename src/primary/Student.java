@@ -89,4 +89,7 @@ public class Student extends SqlBase{
 		stmt.execute("UPDATE Students SET studentId= '"+studentId+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
+    public void delete() throws SQLException{
+        System.out.println("Deleate is not set up for Student");
+    }
 }

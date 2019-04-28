@@ -1,6 +1,7 @@
 package primary;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GradeSet extends SqlBase{
@@ -30,6 +31,9 @@ public class GradeSet extends SqlBase{
 	public void changeGrade(int position, int value) {
 		this.grades.set(position, value);
 		//INSERT SQL
+	}
+	public void delete() throws SQLException {
+		System.out.println("Deleate is not set up for GradeSet");
 	}
 	
 	
