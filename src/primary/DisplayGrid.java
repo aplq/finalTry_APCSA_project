@@ -11,13 +11,14 @@ import java.sql.Statement;
  * author Ethan Brinser
  * 22 March 2019
  */
-public class DisplayGrid extends SqlBase{
+public class DisplayGrid{
+	private Connection conn;
 	private Section section;
 	private short[][] grades;
 	private long gridTemplateId;
 	
 	public DisplayGrid(Connection conn, Section section, int sectionGridNumber) throws SQLException {
-		super(conn);
+		this.conn=conn;
 		this.section=section;
 		this.gridTemplateId=section.getGrids().get(sectionGridNumber).getInternalId();
 		//get the grades in order
@@ -52,9 +53,6 @@ public class DisplayGrid extends SqlBase{
 			return false;
 		}
 		return true;
-	}
-	public void delete() throws SQLException{
-		System.out.println("Deleate is not set up for DisplayGrid");
 	}
 	
 }
