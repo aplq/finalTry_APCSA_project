@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Student extends SqlBase{
 	private long internalId;
@@ -116,4 +117,21 @@ public class Student extends SqlBase{
 		stmt.execute("DELETE FROM Students WHERE internalId="+this.internalId);
 		stmt.close();
     }
+	//loading an student from file
+	public static void loadAssignment(Connection conn, ArrayList<String> data) throws SQLException{
+		Statement stmt = conn.createStatement();
+		stmt.execute("INSERT INTO Student VALUES("+data.get(0)+"'"+data.get(1)+"','"+data.get(2)+"',"+data.get(3)+","+data.get(4)+","+data.get(5)");");
+		stmt.close();
+	}
+	//pushing data to file
+	public ArrayList<String> pullAssignment(){
+		ArrayList<String> data = new ArrayList<String>();
+		data.add(Long.toString(this.internalId));
+		data.add(this.firstName);
+		data.add(this.lastName);
+		data.add(Short.toString(this.gender));
+		data.add(Short.toString(this.grade));
+		data.add(Long.toString(this.studentId));
+		return data;
+	}
 }

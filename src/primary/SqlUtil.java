@@ -26,5 +26,28 @@ public class SqlUtil {
         return activeSections;
     }
     public static void deleteStu(Connection conn, Student stu) throws SQLException{
+        ArrayList<Section> sections = SqlUtil.getAllSections(conn);
+        for(Section sec: sections){
+            sec.removeStu(stu);
+        }
+        stu.delete();
+    }
+    private static ArrayList<GridTemplate> getGridTemplates(Connection conn) throws SQLException{
+        ArrayList<GridTemplate> gridTemplates = new ArrayList<GridTemplate>();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT (*) FROM gridtemplates");
+        while(rs.next()){
+            gridTemplates.add(new GridTemplate(conn, rs));
+        }
+        rs.close();
+        stmt.close();
+        return gridTemplates;
+    }
+    public static void deleteGridTemaplate(Connection conn, GridTemplate gt) throws SQLException{
+        ArrayList<Section> sections = SqlUtil.getAllSections(conn);
+        for(Section sec: sections){
+            sec.removeGrid(gt);
+        }
+        gt.delete();
     }
 }

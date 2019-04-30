@@ -139,7 +139,7 @@ public class Section extends SqlBase{
 		return teacher;
 	}
 	public ArrayList<Student> getStudents() {
-		return students;
+		return this.students;
 	}
 	public ArrayList<GridTemplate> getGrids() {
 		return grids;
@@ -170,7 +170,7 @@ public class Section extends SqlBase{
 		stmt.execute("UPDATE Section SET teacher= '"+teacher+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
-	public boolean removeStu(Student stu) {
+	public void removeStu(Student stu) throws SQLException{
 		Statement stmt=null;
 		int stuNumber=0;
 		for(;stuNumber<this.students.size();stuNumber++) {
@@ -178,40 +178,30 @@ public class Section extends SqlBase{
 				break;
 			}
 		}
-		try {
-			//remove the student
+		//remove the student
+		stmt = conn.createStatement();
+		stmt.addBatch("UPDATE Section SET student"+stuNumber+"= -1 WHERE internalId="+this.internalId+";");
+		this.grids.remove(stuNumber);
+		//shift students over
+		while(stuNumber<this.students.size()-1) {
 			stmt = conn.createStatement();
-			stmt.addBatch("UPDATE Section SET student"+stuNumber+"= -1 WHERE internalId="+this.internalId+";");
-			this.grids.remove(stuNumber);
-			//shift students over
-			while(stuNumber<this.students.size()-1) {
-				stmt = conn.createStatement();
-				stmt.addBatch("UPDATE Section SET student"+stuNumber+"= "+this.students.get(stuNumber+1).getInternalId()+
-						" WHERE internalId="+this.internalId+";");
-				stuNumber++;
-			}
-			//set the position after the grid to -1
-			stmt = conn.createStatement();
-			stmt.addBatch("UPDATE Section SET student"+this.students.size()+"= -1 WHERE internalId="+this.internalId+";");
-			stmt.executeBatch();
-			stmt.close();
-		} catch (SQLException e) {
-			return false;
+			stmt.addBatch("UPDATE Section SET student"+stuNumber+"= "+this.students.get(stuNumber+1).getInternalId()+
+					" WHERE internalId="+this.internalId+";");
+			stuNumber++;
 		}
-		return true;
+		//set the position after the grid to -1
+		stmt = conn.createStatement();
+		stmt.addBatch("UPDATE Section SET student"+this.students.size()+"= -1 WHERE internalId="+this.internalId+";");
+		stmt.executeBatch();
+		stmt.close();
 	}
-	public boolean addStu(Student stu) {
+	public void addStu(Student stu) throws SQLException{
 		Statement stmt=null;
-		try {
-			stmt = conn.createStatement();
-			stmt.execute("UPDATE Section SET student"+this.numStudents()+"= "+stu.getInternalId()+" WHERE internalId="+this.internalId+";");
-			stmt.close();
-		} catch (SQLException e) {
-			return false;
-		}
-		return true;
+		stmt = conn.createStatement();
+		stmt.execute("UPDATE Section SET student"+this.numStudents()+"= "+stu.getInternalId()+" WHERE internalId="+this.internalId+";");
+		stmt.close();
 	}
-	public boolean removeGrid(GridTemplate grid) {
+	public void removeGrid(GridTemplate grid) throws SQLException{
 		Statement stmt=null;
 		int gridNumber=0;
 		for(;gridNumber<this.grids.size();gridNumber++) {
@@ -219,38 +209,28 @@ public class Section extends SqlBase{
 				break;
 			}
 		}
-		try {
-			//remove the grid
+		//remove the grid
+		stmt = conn.createStatement();
+		stmt.addBatch("UPDATE Section SET grid"+gridNumber+"= -1 WHERE internalId="+this.internalId+";");
+		this.grids.remove(gridNumber);
+		//shift grids over
+		while(gridNumber<this.grids.size()-1) {
 			stmt = conn.createStatement();
-			stmt.addBatch("UPDATE Section SET grid"+gridNumber+"= -1 WHERE internalId="+this.internalId+";");
-			this.grids.remove(gridNumber);
-			//shift grids over
-			while(gridNumber<this.grids.size()-1) {
-				stmt = conn.createStatement();
-				stmt.addBatch("UPDATE Section SET grid"+gridNumber+"= "+this.grids.get(gridNumber+1).getInternalId()+
-						" WHERE internalId="+this.internalId+";");
-				gridNumber++;
-			}
-			//set the position after the grid to -1
-			stmt = conn.createStatement();
-			stmt.addBatch("UPDATE Section SET grid"+this.grids.size()+"= -1 WHERE internalId="+this.internalId+";");
-			stmt.executeBatch();
-			stmt.close();
-		} catch (SQLException e) {
-			return false;
+			stmt.addBatch("UPDATE Section SET grid"+gridNumber+"= "+this.grids.get(gridNumber+1).getInternalId()+
+					" WHERE internalId="+this.internalId+";");
+			gridNumber++;
 		}
-		return true;
+		//set the position after the grid to -1
+		stmt = conn.createStatement();
+		stmt.addBatch("UPDATE Section SET grid"+this.grids.size()+"= -1 WHERE internalId="+this.internalId+";");
+		stmt.executeBatch();
+		stmt.close();
 	}
-	public boolean addGrid(GridTemplate grid) {
+	public void addGrid(GridTemplate grid) throws SQLException{
 		Statement stmt=null;
-		try {
 			stmt = conn.createStatement();
 			stmt.execute("UPDATE Section SET grid"+this.grids.size()+"= "+grid.getInternalId()+" WHERE internalId="+this.internalId+";");
 			stmt.close();
-		} catch (SQLException e) {
-			return false;
-		}
-		return true;
 	}
 
 	//delete function

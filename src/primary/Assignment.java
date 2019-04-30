@@ -5,6 +5,7 @@ package primary;
  * 22 March 2019
  */
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Assignment extends SqlBase{
 	private long internalId;
@@ -44,7 +45,21 @@ public class Assignment extends SqlBase{
 		this.internalId=rs.getLong(1);
 		rs.close();
 		stmt.close();
-		
+	}
+	//loading an assigment from file
+	public static void loadAssignment(Connection conn, ArrayList<String> data) throws SQLException{
+		Statement stmt = conn.createStatement();
+		stmt.execute("INSERT INTO Assignments VALUES("+data.get(0)+"'"+data.get(1)+"',"+data.get(2)+","+data.get(3)+");");
+		stmt.close();
+	}
+	//pushing data to file
+	public ArrayList<String> pullAssignment(){
+		ArrayList<String> data = new ArrayList<String>();
+		data.add(Long.toString(this.internalId));
+		data.add(this.description);
+		data.add(Integer.toString(this.weight));
+		data.add(Short.toString(this.type));
+		return data;
 	}
 	
 	//all the getters
