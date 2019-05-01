@@ -7,13 +7,20 @@ import java.util.ArrayList;
 
 public class CsvUtil {
     public static void dataLoad(Connection conn, String dir) throws SQLException {
-        //load the data to ram
+
+        /**
+         * Different ArrayList like assignmentData, gradeData, gridTempelateData, sectionData, and
+         * studentData read from the CSV to copy into SQL database
+         */
+
         ArrayList<ArrayList<String>> assignementData = CsvUtil.readFile(dir+"assignments.csv");
         ArrayList<ArrayList<String>> gradeData = CsvUtil.readFile(dir+"grades.csv");
         ArrayList<ArrayList<String>> gridTemplateData = CsvUtil.readFile(dir+"gridTemplates.csv");
         ArrayList<ArrayList<String>> sectionData = CsvUtil.readFile(dir+"sections.csv");
         ArrayList<ArrayList<String>> studentData = CsvUtil.readFile(dir+"students.csv");
-        //put data into server
+        /**
+         * Calling SQL commands across different classes to load data into database
+         */
         for(ArrayList<String> row: assignementData){
             Assignment.loadAssignment(conn, row);
         }
@@ -30,6 +37,12 @@ public class CsvUtil {
             //Section.loadAssignment(conn, row);
         }
     }
+
+    /**
+     * Used to read filePath
+     * @param filePath
+     * @return
+     */
     public static ArrayList<ArrayList<String>> readFile(String filePath) {
         ArrayList<ArrayList<String>> data;
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -49,6 +62,13 @@ public class CsvUtil {
             return new ArrayList<ArrayList<String>>();
         }
     }
+
+    /**
+     * Used to write through filePath
+     * @param filePath
+     * @param contents
+     * @return
+     */
     public static boolean writeFile(String filePath, ArrayList<ArrayList<String>> contents){
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))){
             for(ArrayList<String> row: contents){
@@ -63,4 +83,10 @@ public class CsvUtil {
             return false;
         }
     }
-}
+
+    public static void addTOSQL()throws SQLException {
+
+
+    }
+
+    }

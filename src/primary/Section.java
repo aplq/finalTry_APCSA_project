@@ -26,13 +26,15 @@ public class Section extends SqlBase{
 		super(conn);
 		this.name=rs.getString("name");
 		this.teacher=rs.getString("teacher");
-		//temp arrays to hold internalIds
+		//temp long type arrays to hold internalIds
 		long[] stuIds = new long[Section.MAX_NUM_OF_STUDENTS];
 		long[] gridTempIds = new long[Section.MAX_NUM_GRIDS_PER_SECTION];
+
 		//number of each to speed up array list adding
 		int numStu=Section.MAX_NUM_OF_STUDENTS;
 		int numGrids=Section.MAX_NUM_GRIDS_PER_SECTION;
-		//get the student ids
+
+		//get the student ids from the SQL
 		for(int a=0; a<stuIds.length; a++) {
 			stuIds[a]=rs.getLong("stu"+a);
 			//check if it is the last student
@@ -41,7 +43,8 @@ public class Section extends SqlBase{
 				break;
 			}
 		}
-		//get the grid template ids
+
+		//get the grid template ids for SQL
 		for(int b=0; b<gridTempIds.length; b++) {
 			gridTempIds[b]=rs.getLong("grid"+b);
 			//check if it is the last grid template
@@ -55,10 +58,12 @@ public class Section extends SqlBase{
 		this.grids=new ArrayList<GridTemplate>();
 		//Create the students
 		for(int c=0; c<numStu; c++) {
+			//Command to add new students into the database
 			this.students.add(new Student(conn, stuIds[c]));
 		}
 		//create the grid templates
 		for(int d=0; d<numGrids; d++) {
+			//
 			this.grids.add(new GridTemplate(conn, gridTempIds[d]));
 		}
 	}
