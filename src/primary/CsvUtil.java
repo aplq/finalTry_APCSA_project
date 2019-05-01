@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CsvUtil {
-    public static void dataLoad(Connection conn, String dir) throws SQLException {
+    public void dataLoad(Connection conn, String dir) throws SQLException {
 
         /**
          * Different ArrayList like assignmentData, gradeData, gridTempelateData, sectionData, and
