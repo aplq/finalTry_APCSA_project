@@ -79,7 +79,7 @@ public class Section extends SqlBase{
 		int numGrids=Section.MAX_NUM_GRIDS_PER_SECTION;
 		//get the student ids
 		for(int a=0; a<stuIds.length; a++) {
-			stuIds[a]=rs.getLong("stu"+a);
+			stuIds[a]=rs.getLong("student"+a);
 			//check if it is the last student
 			if(stuIds[a]<0) {
 				numStu=a;

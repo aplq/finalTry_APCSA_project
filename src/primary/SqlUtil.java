@@ -37,7 +37,7 @@ public class SqlUtil {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT (*) FROM gridtemplates");
         while(rs.next()){
-            gridTemplates.add(new GridTemplate(conn, rs));
+            gridTemplates.add(new GridTemplate(conn, rs.getLong("internalId")));
         }
         rs.close();
         stmt.close();

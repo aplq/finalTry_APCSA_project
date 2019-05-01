@@ -21,17 +21,18 @@ public class DisplayGrid{
 	public DisplayGrid(Connection conn, Section section, int sectionGridNumber) throws SQLException {
 		this.conn=conn;
 		this.section=section;
-		this.gridTemplate=new GridTemplate(conn, section.getGrids().get(sectionGridNumber).getInternalId());
+		this.template=new GridTemplate(conn, section.getGrids().get(sectionGridNumber).getInternalId());
 		//get the grades in order
-		this.grades=new short[section.getStudents().size()][section.getGrids().get(sectionGridNumber).numOfAssignments()];
+		System.out.println(section.getStudents().size()+", "+this.template.getAssignments().size());
+		this.grades=new short[section.getStudents().size()][this.template.getAssignments().size()];
 		for(int row=0; row<section.getStudents().size(); row++) {
 			Statement sm = conn.createStatement();
 			ResultSet rs = sm.executeQuery("SELECT * FROM Grades WHERE "+
-						"gridTemplateId = "+this.gridTemplateId+" AND "+
-						"studentId = "+section.getStudents().get(row)+";");
+						"gridTemplateId = "+this.template.getInternalId()+" AND "+
+						"stuId = "+section.getStudents().get(row).getInternalId()+";");
 			//go through the results
 			rs.next();
-			for(int col=0; col<section.getGrids().size();col++) {
+			for(int col=0; col<this.template.getAssignments().size();col++) {
 				this.grades[row][col]=rs.getShort("grade"+col);
 			}
 		}
@@ -48,7 +49,7 @@ public class DisplayGrid{
 	public boolean setGrade(int rowIndex, int colIndex, short grade) {
 		try {
 			Statement sm = conn.createStatement();
-			sm.executeUpdate("UPDATE Grades SET g"+colIndex+"="+grade+"WHERE gridTemplate="+this.gridTemplateId+
+			sm.executeUpdate("UPDATE Grades SET g"+colIndex+"="+grade+"WHERE gridTemplate="+this.template.getInternalId()+
 					" AND student="+this.section.getStudents().get(rowIndex)+";");
 		} catch (SQLException e) {
 			return false;
@@ -85,7 +86,7 @@ public class DisplayGrid{
 				}
 			}
 			System.out.println("\u2502");
-			this.printline();
+			//this.printline();
 		}
 		//print the assignment numbers
 		String temp;
@@ -136,7 +137,7 @@ public class DisplayGrid{
 				}
 				System.out.print(" ");
 			}
-			System.out.print("\u2502");
+			System.out.println("\u2502");
 			this.printline();
 		}
 	}

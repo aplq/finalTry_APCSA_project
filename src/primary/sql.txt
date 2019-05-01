@@ -61,7 +61,7 @@ create table GridTemplates(
 
 create table Student(
                         internalID bigint auto_increment not null primary key,
-                        fisrtName char(20) default '' not null,
+                        firstName char(20) default '' not null,
                         lastName char(20) default  '' not null,
                         gender tinyint default 2 not null,
                         grade tinyint default 0 not null,

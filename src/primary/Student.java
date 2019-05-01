@@ -25,7 +25,7 @@ public class Student extends SqlBase{
 
 		this.internalId=internalId;
 		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Assignments WHERE internalId="+this.internalId+";");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Student WHERE internalId="+this.internalId+";");
 		rs.next();
 		this.firstName=rs.getString("firstName");
 		this.lastName=rs.getString("lastName");
@@ -120,7 +120,7 @@ public class Student extends SqlBase{
 	//loading an student from file
 	public static void loadAssignment(Connection conn, ArrayList<String> data) throws SQLException{
 		Statement stmt = conn.createStatement();
-		stmt.execute("INSERT INTO Student VALUES("+data.get(0)+"'"+data.get(1)+"','"+data.get(2)+"',"+data.get(3)+","+data.get(4)+","+data.get(5)");");
+		stmt.execute("INSERT INTO Student VALUES("+data.get(0)+"'"+data.get(1)+"','"+data.get(2)+"',"+data.get(3)+","+data.get(4)+","+data.get(5)+");");
 		stmt.close();
 	}
 	//pushing data to file

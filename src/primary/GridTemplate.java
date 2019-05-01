@@ -20,7 +20,7 @@ public class GridTemplate extends SqlBase{
 		super(conn);
 		this.internalId=intenalId;
 		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Assignments WHERE internalId="+this.internalId+";");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Gridtemplates WHERE internalId="+this.internalId+";");
 		rs.next();
 		this.name=rs.getString("name");
 		//array to hold assignment ids

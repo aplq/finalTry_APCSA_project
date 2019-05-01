@@ -18,7 +18,7 @@ public class Main_Test {
 	private static final String USER = "root";
 	private static final String PASS = "";
 	
-	private static void numRowsInAssignments(Connection conn) throws SQLException {
+	/*private static void numRowsInAssignments(Connection conn) throws SQLException {
 		 //print table size for assignments
 		 Statement stmt = conn.createStatement();
 		 ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM Assignments;");
@@ -26,7 +26,7 @@ public class Main_Test {
 		 System.out.println("Number of rows in Assignments table: "+rs.getLong("Count(*)"));
 		 rs.close();
 		 stmt.close();
-	}
+	}*/
 	
 	public static void main(String[] args) {
 		System.out.println("running");
@@ -41,29 +41,8 @@ public class Main_Test {
 		   System.out.println("Connecting to database...");
 		   conn = DriverManager.getConnection(DB_URL,USER,PASS);
 		   
-		  Main_Test.numRowsInAssignments(conn);
-		   
-		   //create an assignment
-		   Assignment a = new Assignment(conn, "Test Assignment", (short) 0 , 90);
-		   
-		   Main_Test.numRowsInAssignments(conn);
-		   
-		   //Retrieve the assignment from the database
-		   Assignment b = new Assignment(conn, a.getInternalId());
-			test(a, b);
-
-			//change a value
-		   a.setDescription("testing update");
-		   
-		   //reload Assignment b and test for equality
-		   b = new Assignment(conn, a.getInternalId());
-			test(a, b);
-
-			//delete the assignment
-		   a.delete();
-		   
-		   Main_Test.numRowsInAssignments(conn);
-		   
+		  DisplayGrid dg = new DisplayGrid(conn, new Section(conn,1), 0);
+		  dg.displayOnConsole();
 		   conn.close();
 		   
 		} catch(SQLException sqle) {

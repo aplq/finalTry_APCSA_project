@@ -23,7 +23,7 @@ public class GradeSet {
         this.grades = new ArrayList<Integer>();
         for(int i =0; i<50; i++)
 		{
-			grades.add(rs.getShort("grade"+i));
+			grades.add(rs.getInt("grade"+i));
 			if(grades.get(i)<0) {
 				grades.remove(i);
 				break;
@@ -60,7 +60,7 @@ public class GradeSet {
 
 			System.out.println("Grades: "+this.grades);
 			System.out.println("GridID: "+this.gridId);
-			System.out.println("Type: "+this.type);
+			//System.out.println("Type: "+this.);
 	}
 
 	

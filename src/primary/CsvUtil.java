@@ -18,16 +18,16 @@ public class CsvUtil {
             Assignment.loadAssignment(conn, row);
         }
         for(ArrayList<String> row: gridTemplateData){
-            GridTemplate.loadAssignment(conn, row);
+            //GridTemplate.loadAssignment(conn, row);
         }
         for(ArrayList<String> row: studentData){
             Student.loadAssignment(conn, row);
         }
         for(ArrayList<String> row: gradeData){
-            GradeSet.loadAssignment(conn, row);
+            //GradeSet.loadAssignment(conn, row);
         }
         for(ArrayList<String> row: sectionData){
-            Section.loadAssignment(conn, row);
+            //Section.loadAssignment(conn, row);
         }
     }
     public static ArrayList<ArrayList<String>> readFile(String filePath) {
@@ -41,7 +41,7 @@ public class CsvUtil {
                 data.add(new ArrayList<String>());
                 for(int colNum=0; line.indexOf(',')!=-1; colNum++){
                     data.get(lineNum).add(line.substring(0,line.indexOf(',')));
-                    line=line.substring(line.indexOf(','),line.length())
+                    line=line.substring(line.indexOf(','),line.length());
                 }
             }
             return data;
