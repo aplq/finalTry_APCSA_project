@@ -25,16 +25,16 @@ public class CsvUtil {
             Assignment.loadAssignment(conn, row);
         }
         for(ArrayList<String> row: gridTemplateData){
-            //GridTemplate.loadAssignment(conn, row);
+            GridTemplate.addAssignment(conn, row);
         }
         for(ArrayList<String> row: studentData){
             Student.loadAssignment(conn, row);
         }
         for(ArrayList<String> row: gradeData){
-            //GradeSet.loadAssignment(conn, row);
+            GradeSet.loadAssignment(conn, row);
         }
         for(ArrayList<String> row: sectionData){
-            //Section.loadAssignment(conn, row);
+            Section.loadAssignment(conn, row);
         }
     }
 

@@ -81,9 +81,13 @@ public class Assignment extends SqlBase{
 	public short getType(){
 		return this.type;
 	}
-	
-	//all the setters
-	//they set the local value and the data base value
+
+	/**
+	 * All the setters are down here
+	 * The setters are being used to set the data into the database
+	 * @param description
+	 * @throws SQLException
+	 */
 	public void setDescription(String description) throws SQLException {
 		this.description = description;
 		Statement stmt = conn.createStatement();
@@ -98,18 +102,23 @@ public class Assignment extends SqlBase{
 		stmt.close();
 	}
 
-	//debug display
+
     public void display(){
 	    System.out.println("internalId: "+this.internalId);
         System.out.println("description: "+this.description);
         System.out.println("Weight: "+this.weight);
         System.out.println("Type: "+this.type);
     }
-	
-	//delete function
+
+	/**
+	 * Just deletes stuff
+	 * @throws SQLException
+	 */
+
 	public void delete() throws SQLException{
 		Assignment.delete(conn,internalId);
 	}
+
 	public static void delete(Connection conn, long internalId) throws SQLException {
 		Statement stmt = conn.createStatement();
 		stmt.execute("DELETE FROM Assignments WHERE internalId="+internalId);

@@ -11,6 +11,8 @@ import java.util.ArrayList;
  * author Ethan Brinser
  * 22 March 2019
  */
+
+
 public class Section extends SqlBase{
 	private long internalId;
 	private String name;
@@ -20,10 +22,18 @@ public class Section extends SqlBase{
 	private ArrayList<GridTemplate> grids;	//max 50
 	public static final int MAX_NUM_OF_STUDENTS=50;
 	public static final int MAX_NUM_GRIDS_PER_SECTION=50;
-	
-	//so the user can do custom sql statments
+
+	//Custom SQL statements can be made by the user
+	//Constructor 1 uses SQL commands
+
+	/**
+	 * @param conn
+	 * @param rs
+	 * @throws SQLException
+	 */
 	public Section(Connection conn, ResultSet rs) throws SQLException {
 		super(conn);
+
 		this.name=rs.getString("name");
 		this.teacher=rs.getString("teacher");
 		//temp long type arrays to hold internalIds
@@ -34,7 +44,7 @@ public class Section extends SqlBase{
 		int numStu=Section.MAX_NUM_OF_STUDENTS;
 		int numGrids=Section.MAX_NUM_GRIDS_PER_SECTION;
 
-		//get the student ids from the SQL
+		//Retrieving StudentsIds from SQL
 		for(int a=0; a<stuIds.length; a++) {
 			stuIds[a]=rs.getLong("stu"+a);
 			//check if it is the last student
@@ -44,7 +54,7 @@ public class Section extends SqlBase{
 			}
 		}
 
-		//get the grid template ids for SQL
+		//Getting grid tempelates from the SQL
 		for(int b=0; b<gridTempIds.length; b++) {
 			gridTempIds[b]=rs.getLong("grid"+b);
 			//check if it is the last grid template

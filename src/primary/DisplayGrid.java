@@ -17,7 +17,15 @@ public class DisplayGrid{
 	private short[][] grades;
 	private GridTemplate template;
 	public static int maxNameLen = 25;
-	
+
+	/**
+	 *
+	 * @param conn
+	 * @param section
+	 * @param sectionGridNumber
+	 * @throws SQLException
+	 */
+
 	public DisplayGrid(Connection conn, Section section, int sectionGridNumber) throws SQLException {
 		this.conn=conn;
 		this.section=section;
@@ -45,7 +53,7 @@ public class DisplayGrid{
 		return grades;
 	}
 	
-	//the grades setter
+	//Used to set and change grades for a student
 	public boolean setGrade(int rowIndex, int colIndex, short grade) {
 		try {
 			Statement sm = conn.createStatement();
@@ -56,6 +64,8 @@ public class DisplayGrid{
 		}
 		return true;
 	}
+
+	//Main fucntion for diaplay grid
 	public void printline(){
 		System.out.print("\u251c");
 		for(int a=0; a<DisplayGrid.maxNameLen; a++){
@@ -66,11 +76,15 @@ public class DisplayGrid{
 		}
 		System.out.println("\u2524");
 	}
+
+	//Main function for printing spaces
 	public void printSpaces(int num){
 		for(int a=0; a<num; a++){
 			System.out.print(" ");
 		}
 	}
+
+	//Displays the main console
 	public void displayOnConsole(){
 		this.printline();
 		//print the circles
@@ -88,7 +102,9 @@ public class DisplayGrid{
 			System.out.println("\u2502");
 			//this.printline();
 		}
-		//print the assignment numbers
+
+		// Printing assignement numbers.
+
 		String temp;
 		System.out.print("\u2502Name /  Assignment Number");
 		for(int c=0; c<this.template.numOfAssignments(); c++){
@@ -102,7 +118,7 @@ public class DisplayGrid{
 		System.out.println("\u2502");
 		this.printline();
 
-		//start printing names and grades
+		//Printing names and grades
 		for(int d=0; d<this.grades.length; d++) {
 			System.out.print("\u2502");
 			temp = this.section.getStudents().get(d).firstAndLastInitial();
@@ -116,22 +132,27 @@ public class DisplayGrid{
 			} else {
 				System.out.print(temp);
 			}
+			/**
+			 * Printing the grades using different colors shwoing the Standard MAstery framework colors assigned
+			 * 			at differnt stages
+			 */
+
 			for(int e=0; e<this.grades[d].length; e++){
 				System.out.print("\u2502");
 				switch(this.grades[d][e]){
 					case 0:
 						System.out.print(" ");
 						break;
-					case 1: //blue[34m red[31m silver[37m gold[33m
+					case 1: 											//blue[34m red[31m silver[37m gold[33m
 						System.out.print("\u001B[34m\u2605\u001B[0m");
 						break;
-					case 2: //blue[34m red[31m silver[37m gold[33m
+					case 2: 											//blue[34m red[31m silver[37m gold[33m
 						System.out.print("\u001B[31m\u2605\u001B[0m");
 						break;
-					case 3: //blue[34m red[31m silver[37m gold[33m
+					case 3:												//blue[34m red[31m silver[37m gold[33m
 						System.out.print("\u001B[37m\u2605\u001B[0m");
 						break;
-					case 4: //blue[34m red[31m silver[37m gold[33m
+					case 4: 											//blue[34m red[31m silver[37m gold[33m
 						System.out.print("\u001B[33m\u2605\u001B[0m");
 						break;
 				}

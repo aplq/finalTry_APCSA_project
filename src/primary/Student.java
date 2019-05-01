@@ -4,6 +4,8 @@ package primary;
  * author Ethan Brinser
  * 22 March 2019
  */
+
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +21,7 @@ public class Student extends SqlBase{
 	private long studentId;
 	public static final String[] genders = {"Male","Female","Other"};
 
-	//load student
+	//Loading a student into the database with a constructor
     public Student(Connection conn, long internalId) throws SQLException {
 		super(conn);
 
