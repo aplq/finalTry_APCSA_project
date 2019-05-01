@@ -31,7 +31,6 @@ public class DisplayGrid{
 		this.section=section;
 		this.template=new GridTemplate(conn, section.getGrids().get(sectionGridNumber).getInternalId());
 		//get the grades in order
-		System.out.println(section.getStudents().size()+", "+this.template.getAssignments().size());
 		this.grades=new short[section.getStudents().size()][this.template.getAssignments().size()];
 		for(int row=0; row<section.getStudents().size(); row++) {
 			Statement sm = conn.createStatement();
@@ -94,7 +93,7 @@ public class DisplayGrid{
 			for(int b=0; b<this.template.numOfAssignments();b++){
 				System.out.print("\u2502");
 				if(this.template.getAssignments().get(b).getType()>=a){
-					System.out.print("\u25cf ");
+					System.out.print("\u2009\u001B[31m\u25cf\u001B[0m\u2009");
 				} else {
 					System.out.print("  ");
 				}
@@ -109,7 +108,7 @@ public class DisplayGrid{
 		System.out.print("\u2502Name /  Assignment Number");
 		for(int c=0; c<this.template.numOfAssignments(); c++){
 			System.out.print("\u2502");
-			temp=Integer.toString(c);
+			temp=Integer.toString(c+1);
 			if(temp.length()==1){
 				temp=" "+temp;
 			}
@@ -133,30 +132,30 @@ public class DisplayGrid{
 				System.out.print(temp);
 			}
 			/**
-			 * Printing the grades using different colors shwoing the Standard MAstery framework colors assigned
-			 * 			at differnt stages
+			 * Printing the grades using different colors shwoing the Standard Mastery framework colors assigned
+			 * 			at diffrent stages
 			 */
 
 			for(int e=0; e<this.grades[d].length; e++){
 				System.out.print("\u2502");
 				switch(this.grades[d][e]){
 					case 0:
-						System.out.print(" ");
+						System.out.print("  ");
 						break;
 					case 1: 											//blue[34m red[31m silver[37m gold[33m
-						System.out.print("\u001B[34m\u2605\u001B[0m");
+						System.out.print("\u2009\u001B[34m\u2605\u001B[0m\u2009");
 						break;
 					case 2: 											//blue[34m red[31m silver[37m gold[33m
-						System.out.print("\u001B[31m\u2605\u001B[0m");
+						System.out.print("\u2009\u001B[31m\u2605\u001B[0m\u2009");
 						break;
 					case 3:												//blue[34m red[31m silver[37m gold[33m
-						System.out.print("\u001B[37m\u2605\u001B[0m");
+						System.out.print("\u2009\u001B[37m\u2605\u001B[0m\u2009");
 						break;
 					case 4: 											//blue[34m red[31m silver[37m gold[33m
-						System.out.print("\u001B[33m\u2605\u001B[0m");
+						System.out.print("\u2009\u001B[33m\u2605\u001B[0m\u2009");
 						break;
 				}
-				System.out.print(" ");
+				//System.out.print(" ");
 			}
 			System.out.println("\u2502");
 			this.printline();
