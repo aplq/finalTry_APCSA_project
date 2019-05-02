@@ -2,11 +2,17 @@ package primary;
 
 import java.io.*;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Statement;
+import java.sql.*;
 
-public class CsvUtil {
-    public static void dataLoad(Connection conn, String dir) throws SQLException {
+
+public class CsvUtil extends SqlBase {
+
+    private long internalId;
+    public void dataLoad(Connection conn, String dir) throws SQLException {
 
         /**
          * Different ArrayList like assignmentData, gradeData, gridTempelateData, sectionData, and
@@ -18,23 +24,46 @@ public class CsvUtil {
         ArrayList<ArrayList<String>> gridTemplateData = CsvUtil.readFile(dir+"gridTemplates.csv");
         ArrayList<ArrayList<String>> sectionData = CsvUtil.readFile(dir+"sections.csv");
         ArrayList<ArrayList<String>> studentData = CsvUtil.readFile(dir+"students.csv");
+
+
+
         /**
          * Calling SQL commands across different classes to load data into database
          */
+
+
         for(ArrayList<String> row: assignementData){
-            Assignment.loadAssignment(conn, row);
+
+
+            stmt = conn.createStatement();
+            ResultSet rs =stmt.executeQuery("SELECT LAST_INSERT_ID();");
+            rs.next();
+            this.internalId=rs.getLong(1);
+            rs.close();
+            stmt.close();
+            Assignment.loadAssignment(conn, this.internalId);
         }
         for(ArrayList<String> row: gridTemplateData){
-            GridTemplate.addAssignment(conn, row);
+            stmt = conn.createStatement();
+            ResultSet rs =stmt.executeQuery("SELECT LAST_INSERT_ID();");
+            rs.next();
+            this.internalId=rs.getLong(1);
+            rs.close();
+            stmt.close();
+            GridTemplate.addAssignment(conn, this.internalId);
+
         }
         for(ArrayList<String> row: studentData){
-            Student.loadAssignment(conn, row);
+            stmt = conn.createStatement();
+            ResultSet rs =stmt.executeQuery("SELECT LAST_INSERT_ID();");
+            rs.next();
+            this.internalId=rs.getLong(1);
+            rs.close();
+            stmt.close();
+            Student.loadAssignment(conn, this.internalId);
         }
-        for(ArrayList<String> row: gradeData){
+        for(ArrayList<String> row: gradeData) {
             GradeSet.loadAssignment(conn, row);
-        }
-        for(ArrayList<String> row: sectionData){
-            Section.loadAssignment(conn, row);
         }
     }
 
@@ -89,4 +118,4 @@ public class CsvUtil {
 
     }
 
-    }
+}

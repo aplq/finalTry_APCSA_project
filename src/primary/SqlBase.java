@@ -9,4 +9,6 @@ public abstract class SqlBase {
         this.conn=conn;
     }
     public abstract void delete() throws SQLException;
+    public abstract void addCsv() throws SQLException;
+    public abstract void deleteCev() throws SQLException;
 }
