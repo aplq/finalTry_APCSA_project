@@ -46,7 +46,7 @@ public class FXMLDocumentController implements Initializable {
         //Step : 1# Create a person class that will represtent data
 
         //Step : 2# Define data in an Observable list and add data as you want to show inside table
-        final ObservableList<EditCell> data = FXCollections.observableArrayList(
+        final ObservableList<Person> data = FXCollections.observableArrayList(
                 new Person("1", "Jacob", "24", "", "jacob.smith@example.com", "jacob.smith@example.com"),
                 new Person("2","Isabella", "25", "","isabella.johnson@example.com", "jacob.smith@example.com"),
                 new Person("3","Ethan", "27","" ,"ethan.williams@example.com", "jacob.smith@example.com"),
@@ -56,15 +56,15 @@ public class FXMLDocumentController implements Initializable {
 
 
         //Step : 3#  Associate data with columns
-        id.setCellValueFactory(new PropertyValueFactory<EditCell,String>("id"));
+        id.setCellValueFactory(new PropertyValueFactory<Person,String>("id"));
 
-        name.setCellValueFactory(new PropertyValueFactory<EditCell,String>("name"));
+        name.setCellValueFactory(new PropertyValueFactory<Person,String>("name"));
 
-        age.setCellValueFactory(new PropertyValueFactory<EditCell,String>("age"));
+        age.setCellValueFactory(new PropertyValueFactory<Person,String>("age"));
 
-        primary.setCellValueFactory(new PropertyValueFactory<EditCell,String>("primary"));
+        primary.setCellValueFactory(new PropertyValueFactory<Person,String>("primary"));
 
-        secondry.setCellValueFactory(new PropertyValueFactory<EditCell,String>("secondry"));
+        secondry.setCellValueFactory(new PropertyValueFactory<Person,String>("secondry"));
 
 
 
@@ -78,3 +78,4 @@ public class FXMLDocumentController implements Initializable {
     }
 
 }
+
