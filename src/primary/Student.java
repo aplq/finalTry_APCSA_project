@@ -22,6 +22,13 @@ public class Student extends SqlBase{
 	public static final String[] genders = {"Male","Female","Other"};
 
 	//Loading a student into the database with a constructor
+
+    /**
+     *
+     * @param conn
+     * @param internalId
+     * @throws SQLException
+     */
     public Student(Connection conn, long internalId) throws SQLException {
 		super(conn);
 
@@ -36,7 +43,18 @@ public class Student extends SqlBase{
 		this.studentId=rs.getLong("studentId");
 		stmt.close();
 	}
-	//create student
+
+    /**
+     *
+     * @param conn
+     * @param firstName
+     * @param lastName
+     * @param gender
+     * @param grade
+     * @param studentId
+     * @throws SQLException
+     */
+	//Creating and loading students onto the database with basic student information
 	public Student(Connection conn, String firstName, String lastName, short gender, short grade, long studentId) throws SQLException{
 		super(conn);
 		this.firstName = firstName;
@@ -58,7 +76,7 @@ public class Student extends SqlBase{
 		stmt.close();
 	}
 
-	//getters
+	//Getters- used to calling info
 	public long getInternalId() {
 		return internalId;
 	}
@@ -78,12 +96,12 @@ public class Student extends SqlBase{
 		return studentId;
 	}
 	
-	//for shortened display
+	//For shortened display
 	public String firstAndLastInitial() {
 		return (this.firstName+" "+this.lastName.charAt(0));
 	}
 	
-	//setters
+	//Setter- Setting variables using SQL commands
 	public void setFirstName(String firstName) throws SQLException {
 		this.firstName = firstName;
 		Statement stmt = conn.createStatement();
@@ -125,7 +143,7 @@ public class Student extends SqlBase{
 		stmt.execute("INSERT INTO Student VALUES("+data.get(0)+"'"+data.get(1)+"','"+data.get(2)+"',"+data.get(3)+","+data.get(4)+","+data.get(5)+");");
 		stmt.close();
 	}
-	//pushing data to file
+	//Pushing data to file
 	public ArrayList<String> pullAssignment(){
 		ArrayList<String> data = new ArrayList<String>();
 		data.add(Long.toString(this.internalId));
