@@ -7,13 +7,18 @@ import java.lang.String;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
-
+/**
+ * Purpose - To set up the SQL database part of Grades
+ * Instance vairables- 	gridId - Unique id for each grid
+ * 						studentId- The student ID or the lunch number for the each student
+ */
 
 public class GradeSet {
 	private long gridId;
 	private long studentId;
 	private ArrayList<Integer> grades;
-	
+
+	//Constructor to initialize the variables and to add them to the database
 	public GradeSet(Connection conn, long gridId, long studentId) throws SQLException{
 		this.gridId=gridId;
 		this.studentId=studentId;
@@ -36,7 +41,7 @@ public class GradeSet {
 
 
 	
-	//getters
+	//Getters- to find the information from different locations
 	public long getGridId() {
 		return gridId;
 	}
@@ -47,7 +52,7 @@ public class GradeSet {
 		return grades;
 	}
 	
-	//set individual grades
+	//Set individual grades- uses SQL commands to change the grades
 	public void changeGrade(Connection conn, int position, int value)throws SQLException {
 		this.grades.set(position, value);
 		Statement stmt = conn.createStatement();
@@ -56,6 +61,7 @@ public class GradeSet {
 		//INSERT SQL
 	}
 
+	//Used to display the grades
 	public void display(){
 
 			System.out.println("Grades: "+this.grades);
@@ -63,6 +69,12 @@ public class GradeSet {
 			//System.out.println("Type: "+this.);
 	}
 
+	//Used to shove data read from the CSV into mySQL database
+	public static void loadAssignment(Connection conn, ArrayList<String> data) throws SQLException{
+		Statement stmt = conn.createStatement();
+		stmt.execute("INSERT INTO GradeSet VALUES("+data.get(0)+"'"+data.get(1)+"','"+data.get(2)+"',"+data.get(3)+","+data.get(4)+","+data.get(5)+");");
+		stmt.close();
+	}
 	
 	
 }

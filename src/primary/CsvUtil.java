@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.sql.*;
 
 
-public class CsvUtil extends SqlBase {
+public class CsvUtil {
 
     private long internalId;
     public void dataLoad(Connection conn, String dir) throws SQLException {
@@ -35,32 +35,16 @@ public class CsvUtil extends SqlBase {
         for(ArrayList<String> row: assignementData){
 
 
-            stmt = conn.createStatement();
-            ResultSet rs =stmt.executeQuery("SELECT LAST_INSERT_ID();");
-            rs.next();
-            this.internalId=rs.getLong(1);
-            rs.close();
-            stmt.close();
-            Assignment.loadAssignment(conn, this.internalId);
+            Assignment.loadAssignment(conn, row);
         }
         for(ArrayList<String> row: gridTemplateData){
-            stmt = conn.createStatement();
-            ResultSet rs =stmt.executeQuery("SELECT LAST_INSERT_ID();");
-            rs.next();
-            this.internalId=rs.getLong(1);
-            rs.close();
-            stmt.close();
-            GridTemplate.addAssignment(conn, this.internalId);
+
+            GridTemplate.addAssignmentCsv(conn, row );
 
         }
         for(ArrayList<String> row: studentData){
-            stmt = conn.createStatement();
-            ResultSet rs =stmt.executeQuery("SELECT LAST_INSERT_ID();");
-            rs.next();
-            this.internalId=rs.getLong(1);
-            rs.close();
-            stmt.close();
-            Student.loadAssignment(conn, this.internalId);
+
+            Student.loadAssignment(conn, row);
         }
         for(ArrayList<String> row: gradeData) {
             GradeSet.loadAssignment(conn, row);

@@ -1,4 +1,10 @@
 package primary;
+/**
+ * The backbone of the Project- the Main
+ * Some variables used throughout the class-
+ *                  *
+ *
+ */
 
 import javafx.application.Application;
 import javafx.scene.Scene;

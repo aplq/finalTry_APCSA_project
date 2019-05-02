@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+//Develops the grid Tempelate
 public class GridTemplate extends SqlBase{
 	private long internalId;
 	private String name;
@@ -118,5 +119,15 @@ public class GridTemplate extends SqlBase{
 	}
 	public void delete() throws SQLException{
 		System.out.println("Deleate is not set up for GridTemplate");
+	}
+
+	public static void addAssignmentCsv(Connection conn, ArrayList<String> data) throws SQLException{
+
+		this.assignments.add(a);
+		Statement stmt;
+
+			stmt = conn.createStatement();
+			stmt.execute("UPDATE GridTemplates SET assignment"+(this.assignments.size()-1)+"WHERE internalId="+this.row);
+			stmt.close();
 	}
 }
