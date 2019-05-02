@@ -63,6 +63,9 @@ public class DisplayGrid{
 		}
 		return true;
 	}
+	public GridTemplate getTemplate(){
+		return this.template;
+	}
 
 	//Main fucntion for diaplay grid
 	public void printline(){
