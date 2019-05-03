@@ -31,8 +31,7 @@ public class FXMLDocumentController implements Initializable {
         // TODO
         TableColumn id = new TableColumn("ID");
         TableColumn name = new TableColumn("NAME");
-        TableColumn age = new TableColumn("AGE");
-        TableColumn email = new TableColumn("EAMIL");
+        TableColumn email = new TableColumn("EMAIL");
 
         TableColumn primary = new TableColumn("PRIMARY");
         TableColumn secondry = new TableColumn("SECONDRY");
@@ -40,22 +39,22 @@ public class FXMLDocumentController implements Initializable {
         email.getColumns().addAll(primary, secondry);
 
 
-        myTable.getColumns().addAll(id, name, age, email);
+        myTable.getColumns().addAll(id, name, email);
 
 
-        //Step : 1# Create a person class that will represtent data
+        //Create a person class that will represtent data
 
-        //Step : 2# Define data in an Observable list and add data as you want to show inside table
+        //Define data in an Observable list and add data as you want to show inside table
         final ObservableList<Person> data = FXCollections.observableArrayList(
-                new Person("1", "Jacob", "24", "", "jacob.smith@example.com", "jacob.smith@example.com"),
-                new Person("2","Isabella", "25", "","isabella.johnson@example.com", "jacob.smith@example.com"),
-                new Person("3","Ethan", "27","" ,"ethan.williams@example.com", "jacob.smith@example.com"),
-                new Person("4","Emma", "28","" ,"emma.jones@example.com", "jacob.smith@example.com"),
-                new Person("5","Michael", "29", "" ,"michael.brown@example.com", "jacob.smith@example.com"),
-                new Person("5","Michael", "29", "","michael.brown@example.com", "jacob.smith@example.com")   );
+                new Person("1", "Schenk", "schenk@fultonschools.org"),
+                new Person("2", "Shreyans","shreyanssaragoni@gmail.com"),
+                new Person("3", "Ethan", "27", "ethan@gmail.com"),
+                new Person("4", "Allie", "28", "allisonfail08@gmail.com"),
+                new Person("5", "Nikhil", "29", "nikhileuppal@gmail.com"),
+                );
 
 
-        //Step : 3#  Associate data with columns
+        //Associate data with columns
         id.setCellValueFactory(new PropertyValueFactory<Person,String>("id"));
 
         name.setCellValueFactory(new PropertyValueFactory<Person,String>("name"));
@@ -68,7 +67,7 @@ public class FXMLDocumentController implements Initializable {
 
 
 
-        //Step 4: add data inside table
+        //Add data inside table
         myTable.setItems(data);
 
 
