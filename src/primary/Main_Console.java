@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.io;
+//import java.io;
 
 public class Main_Console {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -109,7 +109,7 @@ public class Main_Console {
         return in.getInt("Your Selection: ");
     }
 
-    public static int addStudent(ArrayList<Student> students) throws IOException {
+    /*public static int addStudent(ArrayList<Student> students) throws IOException {
 
         BufferedReader input = new BufferedReader ( new InputStreamReader ( System.in ) );
         System.out.println("Enter the name of the student you want to remove-");
@@ -118,6 +118,6 @@ public class Main_Console {
 
 
 
-    }
+    }*/
 
 }

@@ -77,7 +77,7 @@ public class Assignment extends SqlBase{
      */
 	public static void loadAssignment(Connection conn, ArrayList<String> data) throws SQLException{
 		Statement stmt = conn.createStatement();
-		stmt.execute("INSERT INTO Assignments VALUES("+data.get(0)+"'"+data.get(1)+"',"+data.get(2)+","+data.get(3)+");");
+		stmt.execute("INSERT INTO Assignments VALUES("+data.get(0)+",'"+data.get(1)+"',"+data.get(2)+","+data.get(3)+");");
 		stmt.close();
 	}
 	//Pushing data to file

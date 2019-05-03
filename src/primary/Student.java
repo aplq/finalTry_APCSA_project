@@ -140,7 +140,7 @@ public class Student extends SqlBase{
 	//loading an student from file
 	public static void loadAssignment(Connection conn, ArrayList<String> data) throws SQLException{
 		Statement stmt = conn.createStatement();
-		stmt.execute("INSERT INTO Student VALUES("+data.get(0)+"'"+data.get(1)+"','"+data.get(2)+"',"+data.get(3)+","+data.get(4)+","+data.get(5)+");");
+		stmt.execute("INSERT INTO Student VALUES("+data.get(0)+",'"+data.get(1)+"','"+data.get(2)+"',"+data.get(3)+","+data.get(4)+","+data.get(5)+");");
 		stmt.close();
 	}
 	//Pushing data to file

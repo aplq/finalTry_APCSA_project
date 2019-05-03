@@ -82,6 +82,7 @@ public class Section extends SqlBase{
 		this.isActive=Boolean.parseBoolean(data.get(3));
 		Statement stmt = conn.createStatement();
 		stmt.execute("INSERT INTO section (internalID, name, teachet, isActive) VALUES ("+this.internalId+", '"+this.name+"', '"+this.teacher+"', "+this.isActive+");");
+		stmt.close();
 		for(int a=0; a<50; a++){
 			if(data.get(a+4).equals("-1")){
 				break;

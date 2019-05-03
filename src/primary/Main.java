@@ -20,7 +20,7 @@ import javafx.scene.control.ComboBox;
 import java.lang.String;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
-import sun.jvm.hotspot.debugger.win32.coff.DebugVC50X86RegisterEnums;
+//import sun.jvm.hotspot.debugger.win32.coff.DebugVC50X86RegisterEnums;
 //     sql util get active sections . get name
 
 public class Main extends Application {
@@ -107,7 +107,7 @@ public class Main extends Application {
                         gridpane1.add(new Label(selectedSemester + " roster"), 3, 4);
 
                     if (selectedSemester == "spring"){
-                        GridTemplate( , 239494342);
+                        //GridTemplate( , 239494342);
                     }
                     });
                     break;

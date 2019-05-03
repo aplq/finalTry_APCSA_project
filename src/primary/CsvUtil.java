@@ -11,19 +11,18 @@ import java.sql.*;
 
 public class CsvUtil {
 
-    private long internalId;
-    public void dataLoad(Connection conn, String dir) throws SQLException {
+    public static void dataLoad(Connection conn, String dir) throws SQLException {
 
         /**
          * Different ArrayList like assignmentData, gradeData, gridTempelateData, sectionData, and
          * studentData read from the CSV to copy into SQL database
          */
 
-        ArrayList<ArrayList<String>> assignementData = CsvUtil.readFile(dir+"assignments.csv");
-        ArrayList<ArrayList<String>> gradeData = CsvUtil.readFile(dir+"grades.csv");
-        ArrayList<ArrayList<String>> gridTemplateData = CsvUtil.readFile(dir+"gridTemplates.csv");
-        ArrayList<ArrayList<String>> sectionData = CsvUtil.readFile(dir+"sections.csv");
-        ArrayList<ArrayList<String>> studentData = CsvUtil.readFile(dir+"students.csv");
+        /*ArrayList<ArrayList<String>> assignementData =
+        ArrayList<ArrayList<String>> gradeData = ;
+        ArrayList<ArrayList<String>> gridTemplateData = ;
+        ArrayList<ArrayList<String>> sectionData = ;
+        ArrayList<ArrayList<String>> studentData = ;*/
 
 
 
@@ -32,24 +31,24 @@ public class CsvUtil {
          */
 
 
-        for(ArrayList<String> row: assignementData){
+        for(ArrayList<String> row: CsvUtil.readFile(dir+"assignments.csv")){
 
 
             Assignment.loadAssignment(conn, row);
         }
-        for(ArrayList<String> row: gridTemplateData){
+        for(ArrayList<String> row: CsvUtil.readFile(dir+"gridtemplate.csv")){
 
             GridTemplate.addAssignmentCsv(conn, row );
 
         }
-        for(ArrayList<String> row: studentData){
+        for(ArrayList<String> row: CsvUtil.readFile(dir+"students.csv")){
 
             Student.loadAssignment(conn, row);
         }
-        for(ArrayList<String> row: gradeData) {
+        for(ArrayList<String> row: CsvUtil.readFile(dir+"grades.csv")) {
             GradeSet.loadAssignment(conn, row);
         }
-        for(ArrayList<String> row: sectionData){
+        for(ArrayList<String> row: CsvUtil.readFile(dir+"section.csv")){
             new Section(conn, row);
         }
     }
@@ -61,17 +60,20 @@ public class CsvUtil {
      */
     public static ArrayList<ArrayList<String>> readFile(String filePath) {
         ArrayList<ArrayList<String>> data;
+        ArrayList<String> temp2;
+        String[] temp;
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             Integer lineNum=0;
             data = new ArrayList<ArrayList<String>>();
             while((line=br.readLine())!=null){
                 //parse the line
-                data.add(new ArrayList<String>());
-                for(int colNum=0; line.indexOf(',')!=-1; colNum++){
-                    data.get(lineNum).add(line.substring(0,line.indexOf(',')));
-                    line=line.substring(line.indexOf(','),line.length());
+                temp2= new ArrayList<String>();
+                temp=line.split(",");
+                for(String str : temp){
+                    temp2.add(str);
                 }
+                data.add(temp2);
             }
             return data;
         } catch (IOException a){
