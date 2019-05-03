@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class TableViewFXMLExample extends Application {
+public class TableViewFXML extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -20,9 +20,7 @@ public class TableViewFXMLExample extends Application {
         stage.show();
     }
 
-    /**
-     * @param args the command line arguments
-     */
+    //args the command line arguments
     public static void main(String[] args) {
         launch(args);
     }
