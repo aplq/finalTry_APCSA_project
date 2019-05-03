@@ -6,7 +6,8 @@ package primary;
  */
 import java.sql.*;
 import java.util.ArrayList;
-//Class for the storage nad modifications of assignments
+
+//Class for the storage and modifications of assignments
 public class Assignment extends SqlBase{
 
 	private long internalId;
@@ -27,9 +28,13 @@ public class Assignment extends SqlBase{
 
 		//set internal id
 		this.internalId=internalId;
-		//run the sql
+
+		//Run the sql
+
+		//This statement is seen multiple times becuase its the basis of SQL
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Assignments WHERE internalId="+this.internalId+";");
+
 		//Handle the results and fill out the fields
 		rs.next();
 		this.description=rs.getString("description");
@@ -140,6 +145,11 @@ public class Assignment extends SqlBase{
 		Assignment.delete(conn,internalId);
 	}
 
+	/**
+	 * @param conn
+	 * @param internalId
+	 * @throws SQLException
+	 */
 	public static void delete(Connection conn, long internalId) throws SQLException {
 		Statement stmt = conn.createStatement();
 		stmt.execute("DELETE FROM Assignments WHERE internalId="+internalId);

@@ -31,7 +31,26 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws SQLException {
+
+        Connection conn = null;             //apparently i get a list of possible sections from this crap
+        try{
+            //STEP 2: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            //STEP 3: Open a connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
+            DisplayGrid dg = new DisplayGrid(conn, new Section(conn,1), 0);
+            dg.displayOnConsole();
+        }
+        catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
 
 
         Stage secondaryStage = new Stage(); //period 1
@@ -110,25 +129,18 @@ public class Main extends Application {
                         gridpane1.add(new Label(selectedSemester + " roster"), 3, 4);
 
                         if (selectedSemester == "spring") {
-                            Connection conn = null;
-                            try{
-                                //STEP 2: Register JDBC driver
-                                Class.forName("com.mysql.jdbc.Driver");
-
-                                //STEP 3: Open a connection
-                                System.out.println("Connecting to database...");
-                                conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-                                DisplayGrid dg = new DisplayGrid(conn, new Section(conn,1), 0);
-                                dg.displayOnConsole();
-                            }
-                            catch (ClassNotFoundException ex) {
-                                ex.printStackTrace();
-                            } catch (SQLException ex) {
-                                ex.printStackTrace();
-                            } {
-                                //sql exception and class not found exception
-                            }
+                        }
+                        Section ection = null;
+                        try {
+                            ection = new Section(DriverManager.getConnection(DB_URL,USER,PASS), "Spring", "Schenk");
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                        try {
+                            new DisplayGrid(DriverManager.getConnection(DB_URL,USER,PASS), ection , 34);
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
                     });
                     break;
 
@@ -312,6 +324,6 @@ public class Main extends Application {
             // selectedPeriod = (String) periodComboBox.getValue();
         });
 
-        conn.close;
+      //  conn.close;
     }
 }

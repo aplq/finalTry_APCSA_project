@@ -1,5 +1,10 @@
 package primary;
 
+/**
+ * Author - Ethan Brinser
+ * Purpose - To make a console in case our Fx doesn't work
+ */
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -7,15 +12,21 @@ import java.util.ArrayList;
 //import java.io;
 
 public class Main_Console {
+
+    //Database locations
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost/projectgrids";
 
-    //  Database credentials
+    //Database credentials- username and password
     private static final String USER = "root";
     private static final String PASS = "";
     public static final UserInput in = new UserInput();
 
 
+    /**
+     * Main to pull together Unicode
+     * @param args
+     */
     public static void main(String[] args){
         Connection conn = null;
         try {
@@ -43,6 +54,11 @@ public class Main_Console {
         System.out.print("Welcome To Project Grids Console edition version 1.0");
         Main_Console.mainMenue(conn);
     }
+
+    /**
+     * Makes the main Menu
+     * @param conn
+     */
     public static void mainMenue(Connection conn){
         boolean keepRunnring = true;
         while(keepRunnring){
@@ -85,6 +101,12 @@ public class Main_Console {
             }
         }
     }
+
+    /**
+     * Aids in selecing section
+     * @param sections
+     * @return
+     */
     public static int selectSection(ArrayList<Section> sections){
         System.out.println("Please Select a Section:");
         for(int s=1; s<=sections.size(); s++){
@@ -97,6 +119,12 @@ public class Main_Console {
             return data - 1;
         }
     }
+
+    /**
+     * Selects Grid
+     * @param gts
+     * @return
+     */
     public static int selectGtidTemplate(ArrayList<GridTemplate> gts){
         System.out.println("Please Select a Grid Template:");
         for(int gt=1; gt<=gts.size(); gt++){
@@ -109,6 +137,12 @@ public class Main_Console {
             return data - 1;
         }
     }
+
+    /**
+     * Selects students to edit the information
+     * @param students
+     * @return
+     */
     public static int selectStudent(ArrayList<Student> students){
         System.out.println("Please Select a Student:");
         for(int stu=1; stu<=students.size(); stu++){
@@ -121,6 +155,12 @@ public class Main_Console {
             return data - 1;
         }
     }
+
+    /**
+     * Selects assignments to make changes to them
+     * @param assignments
+     * @return
+     */
     public static int selectAssignment(ArrayList<Assignment> assignments){
         System.out.println("Please Select a Asignment:");
         for(int assign=1; assign<=assignments.size(); assign++){

@@ -37,7 +37,7 @@ public class Section extends SqlBase{
 		long[] stuIds = new long[Section.MAX_NUM_OF_STUDENTS];
 		long[] gridTempIds = new long[Section.MAX_NUM_GRIDS_PER_SECTION];
 
-		//number of each to speed up array list adding
+		//Number of each to speed up array list adding
 		int numStu=Section.MAX_NUM_OF_STUDENTS;
 		int numGrids=Section.MAX_NUM_GRIDS_PER_SECTION;
 
@@ -60,26 +60,39 @@ public class Section extends SqlBase{
 				break;
 			}
 		}
+
 		//Initialize the array lists
 		this.students=new ArrayList<Student>();
 		this.grids=new ArrayList<GridTemplate>();
+
 		//Create the students
 		for(int c=0; c<numStu; c++) {
+
 			//Command to add new students into the database
 			this.students.add(new Student(conn, stuIds[c]));
 		}
-		//create the grid templates
+
+		//Creating the grid templates
 		for(int d=0; d<numGrids; d++) {
 			//
 			this.grids.add(new GridTemplate(conn, gridTempIds[d]));
 		}
 	}
+
+	/**
+	 * Constructor
+	 * @param conn
+	 * @param data
+	 * @throws SQLException
+	 */
 	public Section(Connection conn, ArrayList<String> data) throws SQLException{
 		super(conn);
 		this.internalId=Integer.parseInt(data.get(0));
 		this.name=data.get(1);
 		this.teacher=data.get(2);
 		this.isActive=Boolean.parseBoolean(data.get(3));
+
+		//Query to get things based on sections
 		Statement stmt = conn.createStatement();
 		stmt.execute("INSERT INTO section (internalID, name, teachet, isActive) VALUES ("+this.internalId+", '"+this.name+"', '"+this.teacher+"', "+this.isActive+");");
 		stmt.close();
@@ -98,6 +111,13 @@ public class Section extends SqlBase{
 			}
 		}
 	}
+
+	/**
+	 * Another constuctor
+	 * @param conn
+	 * @param internalId
+	 * @throws SQLException
+	 */
 	public Section(Connection conn, long internalId) throws SQLException {
 		super(conn);
 		this.internalId=internalId;
@@ -107,13 +127,15 @@ public class Section extends SqlBase{
 		rs.next();
 		this.name=rs.getString("name");
 		this.teacher=rs.getString("teacher");
-		//temp arrays to hold internalIds
+
+		//Temporary arrays to hold internalIds
 		long[] stuIds = new long[Section.MAX_NUM_OF_STUDENTS];
 		long[] gridTempIds = new long[Section.MAX_NUM_GRIDS_PER_SECTION];
 		//number of each to speed up array list adding
 		int numStu=Section.MAX_NUM_OF_STUDENTS;
 		int numGrids=Section.MAX_NUM_GRIDS_PER_SECTION;
-		//get the student ids
+
+		//Get the student ids
 		for(int a=0; a<stuIds.length; a++) {
 			stuIds[a]=rs.getLong("student"+a);
 			//check if it is the last student
@@ -122,7 +144,8 @@ public class Section extends SqlBase{
 				break;
 			}
 		}
-		//get the grid template ids
+
+		//Get the grid template ids
 		for(int b=0; b<gridTempIds.length; b++) {
 			gridTempIds[b]=rs.getLong("grid"+b);
 			//check if it is the last grid template
@@ -131,20 +154,32 @@ public class Section extends SqlBase{
 				break;
 			}
 		}
-		//finish the statement so constructors can do sql
+
+		//Finish the statement so constructors can do sql
 		stmt.close();
+
 		//Initialize the array lists
 		this.students=new ArrayList<Student>();
 		this.grids=new ArrayList<GridTemplate>();
+
 		//Create the students
 		for(int c=0; c<numStu; c++) {
 			this.students.add(new Student(conn, stuIds[c]));
 		}
+
 		//create the grid templates
 		for(int d=0; d<numGrids; d++) {
 			this.grids.add(new GridTemplate(conn, gridTempIds[d]));
 		}
 	}
+
+	/**
+	 * Another constructor
+	 * @param conn
+	 * @param name
+	 * @param teacher
+	 * @throws SQLException
+	 */
 	public Section(Connection conn, String name, String teacher) throws SQLException{
 		super(conn);
 		this.name=name;
@@ -187,25 +222,49 @@ public class Section extends SqlBase{
 		return this.isActive;
 	}
 	
-	//setters
+	//Setters
+
+	/**
+	 * Sets name using SQL query
+	 * @param name
+	 * @throws SQLException
+	 */
 	public void setName(String name) throws SQLException {
 		this.name = name;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Section SET name= '"+name+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
+
+	/**
+	 * Makes the section active
+	 * @param isActive
+	 * @throws SQLException
+	 */
 	public void setActive(boolean isActive) throws SQLException {
 		this.isActive = isActive;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Section SET isActive= "+isActive+" WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
+
+	/**
+	 * Sets a teacher
+	 * @param teacher
+	 * @throws SQLException
+	 */
 	public void setTeacher(String teacher) throws SQLException {
 		this.teacher = teacher;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Section SET teacher= '"+teacher+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
+
+	/**
+	 * Removes students from a section
+	 * @param stu
+	 * @throws SQLException
+	 */
 	public void removeStu(Student stu) throws SQLException{
 		Statement stmt=null;
 		int stuNumber=0;
@@ -214,11 +273,13 @@ public class Section extends SqlBase{
 				break;
 			}
 		}
-		//remove the student
+
+		//Remove the student
 		stmt = conn.createStatement();
 		stmt.addBatch("UPDATE Section SET student"+stuNumber+"= -1 WHERE internalId="+this.internalId+";");
 		this.grids.remove(stuNumber);
-		//shift students over
+
+		//Shift students over
 		while(stuNumber<this.students.size()-1) {
 			stmt = conn.createStatement();
 			stmt.addBatch("UPDATE Section SET student"+stuNumber+"= "+this.students.get(stuNumber+1).getInternalId()+
@@ -231,12 +292,24 @@ public class Section extends SqlBase{
 		stmt.executeBatch();
 		stmt.close();
 	}
+
+	/**
+	 * Adds student
+	 * @param stu
+	 * @throws SQLException
+	 */
 	public void addStu(Student stu) throws SQLException{
 		Statement stmt=null;
 		stmt = conn.createStatement();
 		stmt.execute("UPDATE Section SET student"+this.numStudents()+"= "+stu.getInternalId()+" WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
+
+	/**
+	 * Removing students from the section
+	 * @param grid
+	 * @throws SQLException
+	 */
 	public void removeGrid(GridTemplate grid) throws SQLException{
 		Statement stmt=null;
 		int gridNumber=0;
@@ -245,23 +318,32 @@ public class Section extends SqlBase{
 				break;
 			}
 		}
-		//remove the grid
+
+		//Remove the grid
 		stmt = conn.createStatement();
 		stmt.addBatch("UPDATE Section SET grid"+gridNumber+"= -1 WHERE internalId="+this.internalId+";");
 		this.grids.remove(gridNumber);
-		//shift grids over
+
+		//Shift grids over
 		while(gridNumber<this.grids.size()-1) {
 			stmt = conn.createStatement();
 			stmt.addBatch("UPDATE Section SET grid"+gridNumber+"= "+this.grids.get(gridNumber+1).getInternalId()+
 					" WHERE internalId="+this.internalId+";");
 			gridNumber++;
 		}
-		//set the position after the grid to -1
+
+		//Set the position after the grid to -1
 		stmt = conn.createStatement();
 		stmt.addBatch("UPDATE Section SET grid"+this.grids.size()+"= -1 WHERE internalId="+this.internalId+";");
 		stmt.executeBatch();
 		stmt.close();
 	}
+
+	/**
+	 * Adds grid to sections
+	 * @param grid
+	 * @throws SQLException
+	 */
 	public void addGrid(GridTemplate grid) throws SQLException{
 		Statement stmt=null;
 			stmt = conn.createStatement();
@@ -269,7 +351,7 @@ public class Section extends SqlBase{
 			stmt.close();
 	}
 
-	//delete function
+	//Delete function
 	public void delete() throws SQLException {
 		Statement stmt = conn.createStatement();
 		stmt.execute("DELETE FROM Section WHERE internalID="+this.internalId+",");

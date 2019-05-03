@@ -19,7 +19,7 @@ public class DisplayGrid{
 	public static int maxNameLen = 25;
 
 	/**
-	 *
+	 *Purpose - Displaying the grids
 	 * @param conn
 	 * @param section
 	 * @param sectionGridNumber
@@ -29,22 +29,27 @@ public class DisplayGrid{
 	public DisplayGrid(Connection conn, Section section, int sectionGridNumber) throws SQLException {
 		this.conn=conn;
 		this.section=section;
+
+		//Creates a the template using SQl
 		this.template=new GridTemplate(conn, section.getGrids().get(sectionGridNumber).getInternalId());
-		//get the grades in order
+
+		//This gets the grades in order
 		this.grades=new short[section.getStudents().size()][this.template.getAssignments().size()];
 		for(int row=0; row<section.getStudents().size(); row++) {
 			Statement sm = conn.createStatement();
 			ResultSet rs = sm.executeQuery("SELECT * FROM Grades WHERE "+
 						"gridTemplateId = "+this.template.getInternalId()+" AND "+
 						"stuId = "+section.getStudents().get(row).getInternalId()+";");
-			//go through the results
+
+			//Goes through the results
 			rs.next();
 			for(int col=0; col<this.template.getAssignments().size();col++) {
 				this.grades[row][col]=rs.getShort("grade"+col);
 			}
 		}
 	}
-	//getters
+
+	//Getters
 	public Section getSection() {
 		return section;
 	}
@@ -84,6 +89,8 @@ public class DisplayGrid{
 	}
 
 	//Displays the main console
+
+
 	public void displayOnConsole(){
 		this.printline();
 		//print the circles
@@ -102,8 +109,7 @@ public class DisplayGrid{
 			//this.printline();
 		}
 
-		// Printing assignement numbers.
-
+		// Printing assignment numbers.
 		String temp;
 		System.out.print("\u2502Name /  Assignment Number");
 		for(int c=0; c<this.template.numOfAssignments(); c++){
@@ -131,6 +137,7 @@ public class DisplayGrid{
 			} else {
 				System.out.print(temp);
 			}
+
 			/**
 			 * Printing the grades using different colors shwoing the Standard Mastery framework colors assigned
 			 * 			at diffrent stages
