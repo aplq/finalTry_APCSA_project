@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 //     sql util get active sections . get name
 
 public class Main extends Application {
@@ -121,7 +122,11 @@ public class Main extends Application {
                                 DisplayGrid dg = new DisplayGrid(conn, new Section(conn,1), 0);
                                 dg.displayOnConsole();
                             }
-                            catch{
+                            catch (ClassNotFoundException ex) {
+                                ex.printStackTrace();
+                            } catch (SQLException ex) {
+                                ex.printStackTrace();
+                            } {
                                 //sql exception and class not found exception
                             }
                     });
