@@ -42,28 +42,28 @@ public class FXMLDocumentController implements Initializable {
         myTable.getColumns().addAll(id, name, email);
 
 
-        //Create a person class that will represtent data
+        //Create a EditTable class that will represtent data
 
         //Define data in an Observable list and add data as you want to show inside table
-        final ObservableList<Person> data = FXCollections.observableArrayList(
-                new Person("1", "Schenk", "schenk@fultonschools.org"),
-                new Person("2", "Shreyans","shreyanssaragoni@gmail.com"),
-                new Person("3", "Ethan", "27", "ethan@gmail.com"),
-                new Person("4", "Allie", "28", "allisonfail08@gmail.com"),
-                new Person("5", "Nikhil", "29", "nikhileuppal@gmail.com"),
+        final ObservableList<EditTable> data = FXCollections.observableArrayList(
+                new EditTable("1", "Schenk", "schenk@fultonschools.org"),
+                new EditTable("2", "Shreyans","shreyanssaragoni@gmail.com"),
+                new EditTable("3", "Ethan", "27", "ethan@gmail.com"),
+                new EditTable("4", "Allie", "28", "allisonfail08@gmail.com"),
+                new EditTable("5", "Nikhil", "29", "nikhileuppal@gmail.com"),
                 );
 
 
         //Associate data with columns
-        id.setCellValueFactory(new PropertyValueFactory<Person,String>("id"));
+        id.setCellValueFactory(new PropertyValueFactory<EditTable,String>("id"));
 
-        name.setCellValueFactory(new PropertyValueFactory<Person,String>("name"));
+        name.setCellValueFactory(new PropertyValueFactory<EditTable,String>("name"));
 
-        age.setCellValueFactory(new PropertyValueFactory<Person,String>("age"));
+        age.setCellValueFactory(new PropertyValueFactory<EditTable,String>("age"));
 
-        primary.setCellValueFactory(new PropertyValueFactory<Person,String>("primary"));
+        primary.setCellValueFactory(new PropertyValueFactory<EditTable,String>("primary"));
 
-        secondry.setCellValueFactory(new PropertyValueFactory<Person,String>("secondry"));
+        secondry.setCellValueFactory(new PropertyValueFactory<EditTable,String>("secondry"));
 
 
 
