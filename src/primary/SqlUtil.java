@@ -18,6 +18,7 @@ public class SqlUtil {
     public static ArrayList<Section> getActiveSections(Connection conn) throws SQLException {
         return SqlUtil.getSection(conn, "SELECT (*) FROM Section WHERE isActive=true;");
     }
+
     //Main purpose of this function is to retrieve all functions
     public static ArrayList<Section> getAllSections(Connection conn) throws SQLException {
         return SqlUtil.getSection(conn, "SELECT (*) FROM Section;");
@@ -40,6 +41,20 @@ public class SqlUtil {
         stmt.close();
         return activeSections;
     }
+
+    /**
+     * Adds studnets utility function from the main dataabase
+     * @param conn
+     * @param stu
+     * @throws SQLException
+     */
+
+    /**
+     * Deletes studnets utility function from the main dataabase
+     * @param conn
+     * @param stu
+     * @throws SQLException
+     */
     public static void deleteStu(Connection conn, Student stu) throws SQLException{
         ArrayList<Section> sections = SqlUtil.getAllSections(conn);
         for(Section sec: sections){
@@ -47,6 +62,13 @@ public class SqlUtil {
         }
         stu.delete();
     }
+
+    /**
+     * Makes the grid template
+     * @param conn
+     * @return
+     * @throws SQLException
+     */
     private static ArrayList<GridTemplate> getGridTemplates(Connection conn) throws SQLException{
         ArrayList<GridTemplate> gridTemplates = new ArrayList<GridTemplate>();
         Statement stmt = conn.createStatement();
@@ -58,6 +80,13 @@ public class SqlUtil {
         stmt.close();
         return gridTemplates;
     }
+
+    /**
+     * Delets grid template
+     * @param conn
+     * @param gt
+     * @throws SQLException
+     */
     public static void deleteGridTemaplate(Connection conn, GridTemplate gt) throws SQLException{
         ArrayList<Section> sections = SqlUtil.getAllSections(conn);
         for(Section sec: sections){

@@ -1,4 +1,9 @@
 package primary;
+/**
+ * Purpose- to read CSV files and transport them into the database
+ * Author - Shreyans Saraogi
+ * AP CSA A final project
+ */
 
 import java.io.*;
 import java.sql.Connection;
@@ -11,6 +16,12 @@ import java.sql.*;
 
 public class CsvUtil {
 
+    /**
+     * Loading the data
+     * @param conn
+     * @param dir
+     * @throws SQLException
+     */
     public static void dataLoad(Connection conn, String dir) throws SQLException {
 
         /**
@@ -18,11 +29,11 @@ public class CsvUtil {
          * studentData read from the CSV to copy into SQL database
          */
 
-        /*ArrayList<ArrayList<String>> assignementData =
-        ArrayList<ArrayList<String>> gradeData = ;
-        ArrayList<ArrayList<String>> gridTemplateData = ;
-        ArrayList<ArrayList<String>> sectionData = ;
-        ArrayList<ArrayList<String>> studentData = ;*/
+        ArrayList<ArrayList<String>> assignementData;
+        ArrayList<ArrayList<String>> gradeData;
+        ArrayList<ArrayList<String>> gridTemplateData;
+        ArrayList<ArrayList<String>> sectionData;
+        ArrayList<ArrayList<String>> studentData;
 
 
 

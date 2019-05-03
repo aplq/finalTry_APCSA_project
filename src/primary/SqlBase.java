@@ -3,6 +3,9 @@ package primary;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Abstract class
+ */
 public abstract class SqlBase {
     protected final Connection conn;
     public SqlBase(Connection conn){

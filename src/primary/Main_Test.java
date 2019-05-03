@@ -1,4 +1,8 @@
 package primary;
+/**
+ * Author - Every group member
+ * Main
+ */
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,10 +31,17 @@ public class Main_Test {
 		 rs.close();
 		 stmt.close();
 	}*/
-	
+
+	/**
+	 * Starts pulling things to start developing the database
+	 * Develops the database
+	 * @param args
+	 */
 	public static void main(String[] args) {
+
+		// Testing data base connection and methods in assignment class
 		System.out.println("running");
-		// testing data base connection and methods in assignment class
+
 		
 		Connection conn = null;
 		try{
@@ -47,6 +58,7 @@ public class Main_Test {
 		   
 		} catch(SQLException sqle) {
 			sqle.printStackTrace();
+
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -54,6 +66,11 @@ public class Main_Test {
 
 	}
 
+	/**
+	 * Testing assignments
+	 * @param a
+	 * @param b
+	 */
 	private static void test(Assignment a, Assignment b) {
 		System.out.println("A:");
 		a.display();

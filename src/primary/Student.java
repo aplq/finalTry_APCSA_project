@@ -45,7 +45,7 @@ public class Student extends SqlBase{
 	}
 
     /**
-     *
+     *Creating and loading students onto the database with basic student information
      * @param conn
      * @param firstName
      * @param lastName
@@ -54,7 +54,7 @@ public class Student extends SqlBase{
      * @param studentId
      * @throws SQLException
      */
-	//Creating and loading students onto the database with basic student information
+
 	public Student(Connection conn, String firstName, String lastName, short gender, short grade, long studentId) throws SQLException{
 		super(conn);
 		this.firstName = firstName;
@@ -100,32 +100,57 @@ public class Student extends SqlBase{
 	public String firstAndLastInitial() {
 		return (this.firstName+" "+this.lastName.charAt(0));
 	}
-	
-	//Setter- Setting variables using SQL commands
+
+	/**
+	 *Setter- Setting variables using SQL commands
+	 * @param firstName
+	 * @throws SQLException
+	 */
 	public void setFirstName(String firstName) throws SQLException {
 		this.firstName = firstName;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Students SET firstName= '"+firstName+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
+
+	/**
+	 * Sets Last name of the student
+	 * @param lastName
+	 * @throws SQLException
+	 */
 	public void setLastName(String lastName) throws SQLException {
 		this.lastName = lastName;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Students SET lastName= '"+lastName+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
+
+	/**
+	 * Sets Gender
+	 * @param gender
+	 * @throws SQLException
+	 */
 	public void setGender(short gender) throws SQLException {
 		this.gender = gender;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Students SET gender= '"+gender+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
+
+	/**
+	 * Sets grade level
+	 * @param grade
+	 * @throws SQLException
+	 */
 	public void setGrade(short grade) throws SQLException {
 		this.grade = grade;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Students SET grade= '"+grade+"' WHERE internalId="+this.internalId+";");
 		stmt.close();
-	}
+
+		/**
+		 * Sets student ID
+		 */
 	public void setStudentId(long studentId) throws SQLException {
 		this.studentId = studentId;
 		Statement stmt = conn.createStatement();
@@ -137,7 +162,10 @@ public class Student extends SqlBase{
 		stmt.execute("DELETE FROM Students WHERE internalId="+this.internalId);
 		stmt.close();
     }
-	//loading an student from file
+
+		/**
+		 * loading an student from file
+ 		 */
 	public static void loadAssignment(Connection conn, ArrayList<String> data) throws SQLException{
 		Statement stmt = conn.createStatement();
 		stmt.execute("INSERT INTO Student VALUES("+data.get(0)+",'"+data.get(1)+"','"+data.get(2)+"',"+data.get(3)+","+data.get(4)+","+data.get(5)+");");
