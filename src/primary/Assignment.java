@@ -15,7 +15,12 @@ public class Assignment extends SqlBase{
     private int weight;
 
 
-	//Main constructor for assignments based of to add assignment data into SQL
+    /**
+     * Main constructor for assignments based of to add assignment data into SQL
+     * @param conn
+     * @param internalId
+     * @throws SQLException
+     */
 	public Assignment(Connection conn, long internalId) throws SQLException {
 		super(conn);
 
@@ -33,16 +38,23 @@ public class Assignment extends SqlBase{
 		stmt.close();
 	}
 
-	//creating a new assignment
+	/**
+     * Creating a new assignment
+     * @param conn
+     * @param description
+     * @param type
+     * @param weight
+     * @throws SQLException
+     */
 	public Assignment(Connection conn, String description, short type, int weight) throws SQLException {
 		super(conn);
 
-		//set the fields of the assignments
+		//Set the fields of the assignments
 		this.description=description;
 		this.type=type;
 		this.weight=weight;
 
-		//load the data in to the data base using SQL commands
+		//Load the data in to the data base using SQL commands
 		Statement stmt = conn.createStatement();
 		stmt.execute("INSERT INTO Assignments (description,weight,assignmentType) VALUES('"+this.description+"',"+this.weight+","+this.type+");");
 		stmt.close();
@@ -55,13 +67,20 @@ public class Assignment extends SqlBase{
 		rs.close();
 		stmt.close();
 	}
-	//loading an assigment from file
+	//
+
+    /**
+     * Loading an assigment from file
+     * @param conn
+     * @param data
+     * @throws SQLException
+     */
 	public static void loadAssignment(Connection conn, ArrayList<String> data) throws SQLException{
 		Statement stmt = conn.createStatement();
 		stmt.execute("INSERT INTO Assignments VALUES("+data.get(0)+"'"+data.get(1)+"',"+data.get(2)+","+data.get(3)+");");
 		stmt.close();
 	}
-	//pushing data to file
+	//Pushing data to file
 	public ArrayList<String> pullAssignment(){
 		ArrayList<String> data = new ArrayList<String>();
 		data.add(Long.toString(this.internalId));
@@ -102,7 +121,9 @@ public class Assignment extends SqlBase{
 		stmt.close();
 	}
 
-
+    /**
+     *Sends control to display stuff
+     */
     public void display(){
 	    System.out.println("internalId: "+this.internalId);
         System.out.println("description: "+this.description);
