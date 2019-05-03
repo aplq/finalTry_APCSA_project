@@ -53,15 +53,12 @@ public class DisplayGrid{
 	}
 	
 	//Used to set and change grades for a student
-	public boolean setGrade(int rowIndex, int colIndex, short grade) {
-		try {
-			Statement sm = conn.createStatement();
-			sm.executeUpdate("UPDATE Grades SET g"+colIndex+"="+grade+"WHERE gridTemplate="+this.template.getInternalId()+
-					" AND student="+this.section.getStudents().get(rowIndex)+";");
-		} catch (SQLException e) {
-			return false;
-		}
-		return true;
+	public void setGrade(int rowIndex, int colIndex, short grade) throws SQLException{
+		Statement sm = conn.createStatement();
+		sm.executeUpdate("UPDATE Grades SET grade"+colIndex+"="+grade+" WHERE gridTemplateID="+this.template.getInternalId()+
+				" AND stuID="+this.section.getStudents().get(rowIndex).getInternalId()+";");
+		sm.close();
+		this.grades[rowIndex][colIndex]=grade;
 	}
 	public GridTemplate getTemplate(){
 		return this.template;

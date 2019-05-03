@@ -16,7 +16,7 @@ public class SqlUtil {
 
     //Main purpose of this function is to retrieve active functions
     public static ArrayList<Section> getActiveSections(Connection conn) throws SQLException {
-        return SqlUtil.getSection(conn, "SELECT (*) FROM Section WHERE isActive=true;");
+        return SqlUtil.getSection(conn, "SELECT * FROM Section WHERE isActive=TRUE;");
     }
     //Main purpose of this function is to retrieve all functions
     public static ArrayList<Section> getAllSections(Connection conn) throws SQLException {

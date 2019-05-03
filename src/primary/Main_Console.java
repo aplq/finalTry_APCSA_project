@@ -16,7 +16,7 @@ public class Main_Console {
     public static final UserInput in = new UserInput();
 
 
-    public static void Main(String[] args){
+    public static void main(String[] args){
         Connection conn = null;
         try {
             //STEP 2: Register JDBC driver
@@ -59,8 +59,9 @@ public class Main_Console {
                         ArrayList<Section> activeSections = SqlUtil.getActiveSections(conn);
                         Section choice = activeSections.get(Main_Console.selectSection(activeSections));
                         DisplayGrid grid = new DisplayGrid(conn, choice, Main_Console.selectGtidTemplate(choice.getGrids()));
-                        grid.displayOnConsole();
                         while(!usrIn.equals("return")){
+                            System.out.flush();
+                            grid.displayOnConsole();
                             usrIn=in.getString("Your options: \"return\", \"edit\": ");
                             if(usrIn.equals("edit")){
                                 grid.setGrade(Main_Console.selectStudent(grid.getSection().getStudents()),Main_Console.selectAssignment(grid.getTemplate().getAssignments()),(short)in.getInt("What is the new Grade: "));
@@ -73,40 +74,64 @@ public class Main_Console {
                                 in.getString("Name of Teacher: "));
                         break;
                     //case 3:
+                    case 5:
+                        keepRunnring=false;
+                        break;
 
                 }
             } catch(SQLException e){
                 System.out.println("There was an ishue processing your request.\n Please try again.");
+                //e.printStackTrace();
             }
         }
     }
     public static int selectSection(ArrayList<Section> sections){
         System.out.println("Please Select a Section:");
-        for(int s=0; s<sections.size(); s++){
+        for(int s=1; s<=sections.size(); s++){
             System.out.println(s+":\t"+sections.get(s).getName()+" - "+sections.get(s).getTeacher());
         }
-        return in.getInt("Your Selection: ");
+        int data =in.getInt("Your Selection: ");
+        if(data<1 || data>sections.size()){
+            return Main_Console.selectSection(sections);
+        } else {
+            return data - 1;
+        }
     }
     public static int selectGtidTemplate(ArrayList<GridTemplate> gts){
         System.out.println("Please Select a Grid Template:");
-        for(int gt=0; gt<gts.size(); gt++){
+        for(int gt=1; gt<=gts.size(); gt++){
             System.out.println(gt+":\t"+gts.get(gt).getName());
         }
-        return in.getInt("Your Selection: ");
+        int data =in.getInt("Your Selection: ");
+        if(data<1 || data>gts.size()){
+            return Main_Console.selectGtidTemplate(gts);
+        } else {
+            return data - 1;
+        }
     }
     public static int selectStudent(ArrayList<Student> students){
         System.out.println("Please Select a Student:");
-        for(int stu=0; stu<students.size(); stu++){
+        for(int stu=1; stu<=students.size(); stu++){
             System.out.println(stu+":\t"+students.get(stu).getFirstName()+" "+students.get(stu).getLastName());
         }
-        return in.getInt("Your Selection: ");
+        int data =in.getInt("Your Selection: ");
+        if(data<1 || data>students.size()){
+            return Main_Console.selectStudent(students);
+        } else {
+            return data - 1;
+        }
     }
     public static int selectAssignment(ArrayList<Assignment> assignments){
         System.out.println("Please Select a Asignment:");
-        for(int assign=0; assign<assignments.size(); assign++){
+        for(int assign=1; assign<=assignments.size(); assign++){
             System.out.println(assign+":\t"+assignments.get(assign).getDescription());
         }
-        return in.getInt("Your Selection: ");
+        int data =in.getInt("Your Selection: ");
+        if(data<1 || data>assignments.size()){
+            return Main_Console.selectAssignment(assignments);
+        } else {
+            return data - 1;
+        }
     }
 
     /*public static int addStudent(ArrayList<Student> students) throws IOException {
