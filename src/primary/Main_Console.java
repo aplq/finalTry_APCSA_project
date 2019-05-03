@@ -14,6 +14,8 @@ public class Main_Console {
     private static final String USER = "root";
     private static final String PASS = "";
     public static final UserInput in = new UserInput();
+
+
     public static void Main(String[] args){
         Connection conn = null;
         try {
