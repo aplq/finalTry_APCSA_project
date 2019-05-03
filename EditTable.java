@@ -2,23 +2,21 @@ package tableviewfxmlexample;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class Person {
+public class EditTable {
 
     private SimpleStringProperty id;
     private SimpleStringProperty name;
-    private SimpleStringProperty age;
     private final SimpleStringProperty email;
-
+    
     private SimpleStringProperty primary;
 
     private SimpleStringProperty secondry;
 
 
-    Person(String id, String name, String age, String email, String primary, String secondry) {
+    EditTable(String id, String name, String age, String email, String primary, String secondry) {
 
         this.id = new SimpleStringProperty(id);
         this.name = new SimpleStringProperty(name);
-        this.age = new SimpleStringProperty(age);
         this.email = new SimpleStringProperty(email);
 
         this.primary = new SimpleStringProperty(primary);
@@ -74,20 +72,6 @@ public class Person {
      */
     public void setName(String name) {
         this.name.set(name);
-    }
-
-    /**
-     * @return the age
-     */
-    public String getAge() {
-        return age.get();
-    }
-
-    /**
-     * @param age the age to set
-     */
-    public void setAge(String age) {
-        this.age.set(age);
     }
 
     public String getEmail() {
