@@ -49,6 +49,9 @@ public class CsvUtil {
         for(ArrayList<String> row: gradeData) {
             GradeSet.loadAssignment(conn, row);
         }
+        for(ArrayList<String> row: sectionData){
+            new Section(conn, row);
+        }
     }
 
     /**

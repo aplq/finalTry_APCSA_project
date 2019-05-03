@@ -1,9 +1,6 @@
 package primary;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 /* This class is to hold a section
@@ -75,6 +72,29 @@ public class Section extends SqlBase{
 		for(int d=0; d<numGrids; d++) {
 			//
 			this.grids.add(new GridTemplate(conn, gridTempIds[d]));
+		}
+	}
+	public Section(Connection conn, ArrayList<String> data) throws SQLException{
+		super(conn);
+		this.internalId=Integer.parseInt(data.get(0));
+		this.name=data.get(1);
+		this.teacher=data.get(2);
+		this.isActive=Boolean.parseBoolean(data.get(3));
+		Statement stmt = conn.createStatement();
+		stmt.execute("INSERT INTO section (internalID, name, teachet, isActive) VALUES ("+this.internalId+", '"+this.name+"', '"+this.teacher+"', "+this.isActive+");");
+		for(int a=0; a<50; a++){
+			if(data.get(a+4).equals("-1")){
+				break;
+			} else {
+				this.addStu(new Student(conn, Integer.parseInt(data.get(a+4))));
+			}
+		}
+		for(int a=0; a<50; a++){
+			if(data.get(a+54).equals("-1")){
+				break;
+			} else {
+				this.addStu(new Student(conn, Integer.parseInt(data.get(a+54))));
+			}
 		}
 	}
 	public Section(Connection conn, long internalId) throws SQLException {
