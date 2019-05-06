@@ -51,8 +51,9 @@ public class Main_Test {
 		   //STEP 3: Open a connection
 		   System.out.println("Connecting to database...");
 		   conn = DriverManager.getConnection(DB_URL,USER,PASS);
-		   //CsvUtil.dataLoad(conn, "dump/");
-		  DisplayGrid dg = new DisplayGrid(conn, new Section(conn,1), 0);
+		   CsvUtil.dataLoad(conn, "dump/");
+		   Section sec = new Section(conn,1);
+		  DisplayGrid dg = new DisplayGrid(conn, sec, 0);
 		  dg.displayOnConsole();
 		   conn.close();
 		   

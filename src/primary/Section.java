@@ -1,5 +1,7 @@
 package primary;
 
+import com.sun.javafx.image.impl.IntArgb;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -91,10 +93,12 @@ public class Section extends SqlBase{
 		this.name=data.get(1);
 		this.teacher=data.get(2);
 		this.isActive=Boolean.parseBoolean(data.get(3));
+		this.students=new ArrayList<Student>();
+		this.grids=new ArrayList<GridTemplate>();
 
 		//Query to get things based on sections
 		Statement stmt = conn.createStatement();
-		stmt.execute("INSERT INTO section (internalID, name, teachet, isActive) VALUES ("+this.internalId+", '"+this.name+"', '"+this.teacher+"', "+this.isActive+");");
+		stmt.execute("INSERT INTO section (internalID, name, teacher, isActive) VALUES ("+this.internalId+", '"+this.name+"', '"+this.teacher+"', "+this.isActive+");");
 		stmt.close();
 		for(int a=0; a<50; a++){
 			if(data.get(a+4).equals("-1")){
@@ -107,7 +111,7 @@ public class Section extends SqlBase{
 			if(data.get(a+54).equals("-1")){
 				break;
 			} else {
-				this.addStu(new Student(conn, Integer.parseInt(data.get(a+54))));
+				this.addGrid(new GridTemplate(conn, Integer.parseInt(data.get(a+54))));
 			}
 		}
 	}
@@ -303,6 +307,7 @@ public class Section extends SqlBase{
 		stmt = conn.createStatement();
 		stmt.execute("UPDATE Section SET student"+this.numStudents()+"= "+stu.getInternalId()+" WHERE internalId="+this.internalId+";");
 		stmt.close();
+		this.students.add(stu);
 	}
 
 	/**

@@ -27,7 +27,7 @@ public class Main_Console {
      * Main to pull together Unicode
      * @param args
      */
-    public static void main(String[] args){
+    public static Connection getConected(){
         Connection conn = null;
         try {
             //STEP 2: Register JDBC driver
@@ -51,6 +51,10 @@ public class Main_Console {
                 System.out.println("my sleep has been interupted");
             }
         }
+        return conn;
+    }
+    public static void main(String[] args){
+        Connection conn = Main_Console.getConected();
         System.out.print("Welcome To Project Grids Console edition version 1.0");
         Main_Console.mainMenue(conn);
     }

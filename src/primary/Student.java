@@ -145,9 +145,9 @@ public class Student extends SqlBase{
 	public void setGrade(short grade) throws SQLException {
 		this.grade = grade;
 		Statement stmt = conn.createStatement();
-		stmt.execute("UPDATE Students SET grade= '"+grade+"' WHERE internalId="+this.internalId+";");
+		stmt.execute("UPDATE Students SET grade= '" + grade + "' WHERE internalId=" + this.internalId + ";");
 		stmt.close();
-
+	}
 		/**
 		 * Sets student ID
 		 */
