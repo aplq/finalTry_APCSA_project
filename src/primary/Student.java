@@ -182,4 +182,28 @@ public class Student extends SqlBase{
 		data.add(Long.toString(this.studentId));
 		return data;
 	}
+
+	public edit(String args[]){
+
+
+		System.out.println("Enter 1 to add student, 2 to remove student.");
+		int choice = Integer.parseInt(br.readLine());
+
+		switch choice
+			case 1 :
+			{
+				System.out.println("Enter student first name.");
+				String firstName = In.getString();
+				System.out.println("Enter student last name.");
+				String lastName= In.getString();
+				System.out.println("Enter student gender");
+				Short gender = (Short) In.getInt();
+				System.out.println("Enter student grade.");
+				Short grade = (Short) In.getInt();
+				System.out.println("Enter student Student ID");
+				Long studentId = (Long) In.getInt();
+				Student(conn, firstName, lastName, gender, grade, studentId);
+			}
+
+		}
 }

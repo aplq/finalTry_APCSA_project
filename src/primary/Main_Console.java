@@ -178,7 +178,7 @@ public class Main_Console {
         }
     }
 
-    /*public static int addStudent(ArrayList<Student> students) throws IOException {
+    /*public static int removeStudent(ArrayList<Student> students) throws IOException {
 
         BufferedReader input = new BufferedReader ( new InputStreamReader ( System.in ) );
         System.out.println("Enter the name of the student you want to remove-");
@@ -188,5 +188,7 @@ public class Main_Console {
 
 
     }*/
+
+
 
 }
