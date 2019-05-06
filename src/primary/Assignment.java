@@ -71,7 +71,7 @@ public class Assignment extends SqlBase{
 		rs.close();
 		stmt.close();
 	}
-	//create student base on user input
+	//create assignment based on user input
 	public  Assignment(Connection conn, UserInput in) throws SQLException{
 		super(conn);
 		this.userSetDescription(in);
@@ -103,8 +103,26 @@ public class Assignment extends SqlBase{
 	public void userSetWeigth(UserInput in) throws SQLException{
 		this.setWeight(in.getInt("Weight: "));
 	}
-	public void edit(UserInput in){
-		System.out.println();
+	public void displayOnConsole(){
+		System.out.println("Description: "+this.description);
+		System.out.println("Type:        "+this.type);
+		System.out.println("Weight:      "+this.weight);
+	}
+	public void edit(UserInput in) throws SQLException{
+		System.out.println("Select one to edit or \"back\" to go back");
+		switch(in.getString("Your selection: ").toLowerCase()){
+			case "description":
+				this.userSetDescription(in);
+				break;
+			case "type":
+				this.userSetType(in);
+				break;
+			case "weight":
+				this.userSetWeigth(in);
+			case "back":
+				return;
+		}
+		this.edit(in);
 	}
 
     /**
