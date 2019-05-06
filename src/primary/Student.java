@@ -206,23 +206,30 @@ public class Student extends SqlBase{
 		return data;
 	}
 
-	public edit(){
+	public edit(UserInput in) throws SQLException{
+
+		System.out.println("Select one to edit or \"back\" to go back");
+		switch(in.getString("Your selection: ").toLowerCase()){
+			case "firstname":
+				this.setFirstName(in);
+				break;
+			case "lastname":
+				this.setLastName(in);
+				break;
+			case "gender":
+				this.setGender(in);
+			case "grade":
+				this.setGrade(in);
+			case "studentid":
+				this.setStudentId(in);
+
+			case "back":
+				return;
+		}
+		this.edit(in);
 
 
-		System.out.println("Enter 1 to add student, 2 to remove student.");
-		int choice = Integer.parseInt(br.readLine());
 
-
-				System.out.println("Enter student first name.");
-				String firstName = In.getString();
-				System.out.println("Enter student last name.");
-				String lastName= In.getString();
-				System.out.println("Enter student gender");
-				Short gender = (Short) In.getInt();
-				System.out.println("Enter student grade.");
-				Short grade = (Short) In.getInt();
-				System.out.println("Enter student Student ID");
-				Long studentId = (Long) In.getInt();
 
 		}
 }
