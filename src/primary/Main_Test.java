@@ -80,7 +80,7 @@ public class Main_Test {
 		if(a.equals(b)) {
 			System.out.println("This program is working!");
 		} else {
-			System.out.println("Something went wrong ... this is awkard.");
+			System.out.println("Something went wrong ... this is awkward.");
 		}
 	}
 
