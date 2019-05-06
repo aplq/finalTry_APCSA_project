@@ -42,7 +42,6 @@ public class Assignment extends SqlBase{
 		this.weight=rs.getInt("weight");
 		stmt.close();
 	}
-
 	/**
      * Creating a new assignment
      * @param conn
@@ -72,7 +71,41 @@ public class Assignment extends SqlBase{
 		rs.close();
 		stmt.close();
 	}
-	//
+	//create student base on user input
+	public  Assignment(Connection conn, UserInput in) throws SQLException{
+		super(conn);
+		this.userSetDescription(in);
+		this.userSetType(in);
+		this.userSetWeigth(in);
+		//Load the data in to the data base using SQL commands
+		Statement stmt = conn.createStatement();
+		stmt.execute("INSERT INTO Assignments (description,weight,assignmentType) VALUES('"+this.description+"',"+this.weight+","+this.type+");");
+		stmt.close();
+
+		//Autogenerating the internal id using SQL Query
+		stmt = conn.createStatement();
+		ResultSet rs =stmt.executeQuery("SELECT LAST_INSERT_ID();");
+		rs.next();
+		this.internalId=rs.getLong(1);
+		rs.close();
+		stmt.close();
+	}
+	public void userSetDescription(UserInput in)throws SQLException{
+		this.setDescription(in.getString("Description: "));
+	}
+	public void userSetType(UserInput in) throws SQLException{
+		int type=0;
+		do {
+			type = in.getInt("Type:\n0: regular\n1: quiz\n:2: test");
+		} while (this.type>=0 && this.type<=2);
+		this.setType((short) type);
+	}
+	public void userSetWeigth(UserInput in) throws SQLException{
+		this.setWeight(in.getInt("Weight: "));
+	}
+	public void edit(UserInput in){
+		System.out.println();
+	}
 
     /**
      * Loading an assigment from file
@@ -123,6 +156,12 @@ public class Assignment extends SqlBase{
 		this.type=type;
 		Statement stmt = conn.createStatement();
 		stmt.execute("UPDATE Assignments SET assignmentType= "+type+" WHERE internalId="+this.internalId+";");
+		stmt.close();
+	}
+	public void setWeight(int weight) throws SQLException {
+		this.weight=weight;
+		Statement stmt = conn.createStatement();
+		stmt.execute("UPDATE Assignments SET weight= "+weight+" WHERE internalId="+this.internalId+";");
 		stmt.close();
 	}
 
